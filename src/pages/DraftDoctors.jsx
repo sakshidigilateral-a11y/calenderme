@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { getDoctors, deleteDoctor } from "../api/doctorAPI";
+import { getDraftDoctors, deleteDoctor } from "../api/doctorAPI";
 import { FileText, UserPlus, Trash2, X, AlertCircle } from "lucide-react";
 import Layout from "../components/Layout";
 import {
@@ -12,12 +12,16 @@ import {
   DataTable,
   Crumbs,
 } from "../components/UIComponents";
-import { getDraftDoctors } from "../api/doctorAPI";
 
 export default function DraftDoctors() {
   const navigate = useNavigate();
   const [doctorData, setDoctorData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [specialtyFilter, setSpecialtyFilter] = useState("");
+  const [dateFilter, setDateFilter] = useState("");
   const [deletePopup, setDeletePopup] = useState({
     isOpen: false,
     doctorId: null,
@@ -29,7 +33,8 @@ export default function DraftDoctors() {
       try {
         const user = JSON.parse(localStorage.getItem("user"));
         const data = await getDraftDoctors(user.mrId);
-        setDoctorData(data.doctors);
+        setDoctorData(data.doctors || []);
+        setFilteredData(data.doctors || []);
       } catch (error) {
         console.log(error);
       } finally {
@@ -39,10 +44,50 @@ export default function DraftDoctors() {
     fetchDoctors();
   }, []);
 
+  // Filter logic (unchanged)
+  useEffect(() => {
+    let result = doctorData;
+    if (searchTerm) {
+      const term = searchTerm.toLowerCase();
+      result = result.filter(d =>
+        d.doctorName?.toLowerCase().includes(term) ||
+        d.speciality?.toLowerCase().includes(term) ||
+        d.mclCode?.toLowerCase().includes(term)
+      );
+    }
+    if (statusFilter) {
+      result = result.filter(d => d.status === statusFilter || d.approvalStatus === statusFilter);
+    }
+    if (specialtyFilter) {
+      result = result.filter(d => d.speciality === specialtyFilter);
+    }
+    if (dateFilter === "Today") {
+      const today = new Date().toDateString();
+      result = result.filter(d => new Date(d.createdAt).toDateString() === today);
+    } else if (dateFilter === "Last 7 Days") {
+      const weekAgo = new Date();
+      weekAgo.setDate(weekAgo.getDate() - 7);
+      result = result.filter(d => new Date(d.createdAt) >= weekAgo);
+    } else if (dateFilter === "This Month") {
+      const now = new Date();
+      result = result.filter(d => {
+        const date = new Date(d.createdAt);
+        return date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+      });
+    }
+    setFilteredData(result);
+  }, [searchTerm, statusFilter, specialtyFilter, dateFilter, doctorData]);
+
+  const handleClearFilters = () => {
+    setSearchTerm("");
+    setStatusFilter("");
+    setSpecialtyFilter("");
+    setDateFilter("");
+  };
+
   const handleDelete = async () => {
     const { doctorId, doctorName } = deletePopup;
     if (!doctorId) return;
-
     try {
       await deleteDoctor(doctorId);
       setDoctorData(doctorData.filter((d) => d._id !== doctorId));
@@ -83,44 +128,81 @@ export default function DraftDoctors() {
       <div className="grid cards4">
         <StatCard
           title="Draft Doctors Summary"
-          value={doctorData.length}
+          value={filteredData.length}
           icon={FileText}
           tone="blue"
         />
       </div>
 
-      <Toolbar />
-
-      <DataTable
-        headers={[
-          "Doctor Name",
-          "Speciality",
-          "MCL Code",
-          "City",
-          "Date Saved",
-          "Modified Date",
-          "Actions",
-        ]}
-        rows={doctorData.map((doctor) => [
-          doctor.doctorName,
-          doctor.speciality,
-          doctor.mclCode,
-          doctor.city,
-          new Date(doctor.createdAt).toLocaleDateString(),
-          doctor.updatedAt
-            ? new Date(doctor.updatedAt).toLocaleDateString()
-            : new Date(doctor.createdAt).toLocaleDateString(),
-          <Actions
-            key={doctor._id}
-            edit
-            onEdit={() => navigate(`/edit-doctor/${doctor._id}`)}
-            delete
-            onDelete={() => openDeletePopup(doctor._id, doctor.doctorName)}
-          />,
-        ])}
+      <Toolbar
+        searchValue={searchTerm}
+        onSearchChange={(e) => setSearchTerm(e.target.value)}
+        statusValue={statusFilter}
+        onStatusChange={(e) => setStatusFilter(e.target.value)}
+        specialtyValue={specialtyFilter}
+        onSpecialtyChange={(e) => setSpecialtyFilter(e.target.value)}
+        dateValue={dateFilter}
+        onDateChange={(e) => setDateFilter(e.target.value)}
+        onClearFilters={handleClearFilters}
+        statusOptions={["Draft"]}
+        specialtyOptions={["Cardiology", "Dermatology", "Paediatrics", "Orthopedics", "General Physician"]}
       />
 
-      {/* Custom Delete Confirmation Popup */}
+      {/* ✅ Scrollable table container */}
+{/* ✅ Horizontal scroll wrapper with forced table width */}
+<div style={{ overflowX: "auto", width: "100%", marginTop: "16px" }}>
+  <div style={{ minWidth: "1600px", width: "max-content" }}>
+    <DataTable
+      headers={[
+        "Doctor Name",
+        "Speciality",
+        "MCL Code",
+        "Clinic",
+        "City",
+        "Area",
+        "Email",
+        "Mobile",
+        "Brand",
+        "Current Business",
+        "Expected Business",
+        "Brand Focus",
+        "Other Activities",
+        "Date Saved",
+        "Modified Date",
+        "Actions",
+      ]}
+      rows={filteredData.map((doctor) => [
+        doctor.doctorName,
+        doctor.speciality,
+        doctor.mclCode,
+        doctor.clinicName || "-",
+        doctor.city || "-",
+        doctor.area || "-",
+        doctor.email || "-",
+        doctor.mobile || "-",
+        doctor.brand || "-",
+        doctor.currentBusiness || "0",
+        doctor.expectedBusiness || "0",
+        doctor.brandFocus || "-",
+        doctor.otherActivities || "-",
+        new Date(doctor.createdAt).toLocaleDateString(),
+        doctor.updatedAt
+          ? new Date(doctor.updatedAt).toLocaleDateString()
+          : new Date(doctor.createdAt).toLocaleDateString(),
+        <Actions
+          key={doctor._id}
+          showView={false}
+          edit
+          onEdit={() => navigate(`/edit-doctor/${doctor._id}`)}
+          delete
+          onDelete={() => openDeletePopup(doctor._id, doctor.doctorName)}
+        />,
+      ])}
+    />
+  </div>
+</div>
+
+      {/* Delete confirmation popup (unchanged) */}
       {deletePopup.isOpen && (
         <div
           className="popup-overlay"
@@ -272,6 +354,28 @@ export default function DraftDoctors() {
           from { opacity: 0; transform: scale(0.9) translateY(-20px); }
           to { opacity: 1; transform: scale(1) translateY(0); }
         }
+        /* Optional: make the table headers sticky while scrolling */
+        .dataTable th {
+          position: sticky;
+          top: 0;
+          background: white;
+          z-index: 2;
+        }
+
+        /* Prevent table cells from wrapping text */
+.dataTable th,
+.dataTable td {
+  white-space: nowrap;
+  padding: 10px 14px;
+  vertical-align: middle;
+}
+
+/* Make sure the table doesn't break the layout */
+.dataTable table {
+  width: auto !important;
+  min-width: 100%;
+}
+
       `}</style>
     </Layout>
   );

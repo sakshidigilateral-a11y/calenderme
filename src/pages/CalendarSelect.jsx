@@ -181,7 +181,8 @@ import {
 import { cls, months } from "../utils/helpers";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-
+import CalendarMonthGrid from "../components/CalendarMonthGrid";
+import { designAssets } from "../utils/designAssets";
 const CALENDAR_YEAR = 2027;
 const API_BASE = "http://localhost:5000/api/calendar";
 
@@ -368,197 +369,197 @@ function Popup({
   );
 }
 // ─── Asset map ───────────────────────────────────────────
-const designAssets = {
-  January: [
-    {
-      id: "jan-v1",
-      label: "Jan V1",
-      file: new URL("../assets/Jan v1.webp", import.meta.url).href,
-    },
-    {
-      id: "jan-v2",
-      label: "Jan V2",
-      file: new URL("../assets/Jan v2.webp", import.meta.url).href,
-    },
-    {
-      id: "jan-v3",
-      label: "Jan V3",
-      file: new URL("../assets/Jan v3.webp", import.meta.url).href,
-    },
-    {
-      id: "jan",
-      label: "Jan",
-      file: new URL("../assets/jan.webp", import.meta.url).href,
-    },
-  ],
-  February: [
-    {
-      id: "feb-v1",
-      label: "Feb V1",
-      file: new URL("../assets/Feb v1.webp", import.meta.url).href,
-    },
-    {
-      id: "feb",
-      label: "Feb",
-      file: new URL("../assets/feb.webp", import.meta.url).href,
-    },
-  ],
-  March: [
-    {
-      id: "march-v1",
-      label: "March V1",
-      file: new URL("../assets/March v1.webp", import.meta.url).href,
-    },
-    {
-      id: "march-v2",
-      label: "March V2",
-      file: new URL("../assets/March v2.webp", import.meta.url).href,
-    },
-    {
-      id: "march",
-      label: "March",
-      file: new URL("../assets/march.webp", import.meta.url).href,
-    },
-  ],
-  April: [
-    {
-      id: "april",
-      label: "April",
-      file: new URL("../assets/april.webp", import.meta.url).href,
-    },
-  ],
-  May: [
-    {
-      id: "may-v1",
-      label: "May V1",
-      file: new URL("../assets/May v1.webp", import.meta.url).href,
-    },
-    {
-      id: "may",
-      label: "May",
-      file: new URL("../assets/may.webp", import.meta.url).href,
-    },
-  ],
-  June: [
-    {
-      id: "june-v1",
-      label: "June V1",
-      file: new URL("../assets/June v1.webp", import.meta.url).href,
-    },
-    {
-      id: "june",
-      label: "June",
-      file: new URL("../assets/june.webp", import.meta.url).href,
-    },
-  ],
-  July: [
-    {
-      id: "july-v1",
-      label: "July V1",
-      file: new URL("../assets/July v1.webp", import.meta.url).href,
-    },
-    {
-      id: "july-v2",
-      label: "July V2",
-      file: new URL("../assets/July v2.webp", import.meta.url).href,
-    },
-    {
-      id: "july-v3",
-      label: "July V3",
-      file: new URL("../assets/July v3.webp", import.meta.url).href,
-    },
-    {
-      id: "july-v4",
-      label: "July V4",
-      file: new URL("../assets/July v4.webp", import.meta.url).href,
-    },
-    {
-      id: "july-v5",
-      label: "July V5",
-      file: new URL("../assets/July v5.webp", import.meta.url).href,
-    },
-    {
-      id: "july",
-      label: "July",
-      file: new URL("../assets/july.webp", import.meta.url).href,
-    },
-  ],
-  August: [
-    {
-      id: "aug-v1",
-      label: "Aug V1",
-      file: new URL("../assets/Aug v1.webp", import.meta.url).href,
-    },
-    {
-      id: "aug-v2",
-      label: "Aug V2",
-      file: new URL("../assets/Aug v2.webp", import.meta.url).href,
-    },
-    {
-      id: "aug-v3",
-      label: "Aug V3",
-      file: new URL("../assets/Aug v3.webp", import.meta.url).href,
-    },
-    {
-      id: "august",
-      label: "August",
-      file: new URL("../assets/august.webp", import.meta.url).href,
-    },
-  ],
-  September: [
-    {
-      id: "sep-v1",
-      label: "Sep V1",
-      file: new URL("../assets/Sep v1.webp", import.meta.url).href,
-    },
-    {
-      id: "sep-v2",
-      label: "Sep V2",
-      file: new URL("../assets/Sep v2.webp", import.meta.url).href,
-    },
-    {
-      id: "september",
-      label: "September",
-      file: new URL("../assets/september.webp", import.meta.url).href,
-    },
-  ],
-  October: [
-    {
-      id: "oct-v1",
-      label: "Oct V1",
-      file: new URL("../assets/Oct v1.webp", import.meta.url).href,
-    },
-    {
-      id: "oct",
-      label: "Oct",
-      file: new URL("../assets/oct.webp", import.meta.url).href,
-    },
-  ],
-  November: [
-    {
-      id: "nov-v1",
-      label: "Nov V1",
-      file: new URL("../assets/Nov v1.webp", import.meta.url).href,
-    },
-    {
-      id: "nov",
-      label: "Nov",
-      file: new URL("../assets/nov.webp", import.meta.url).href,
-    },
-  ],
-  December: [
-    {
-      id: "dec-v1",
-      label: "Dec V1",
-      file: new URL("../assets/Dec v1.webp", import.meta.url).href,
-    },
-    {
-      id: "dec",
-      label: "Dec",
-      file: new URL("../assets/dec.webp", import.meta.url).href,
-    },
-  ],
-};
+// const designAssets = {
+//   January: [
+//     {
+//       id: "jan-v1",
+//       label: "Jan V1",
+//       file: new URL("../assets/Jan v1.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "jan-v2",
+//       label: "Jan V2",
+//       file: new URL("../assets/Jan v2.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "jan-v3",
+//       label: "Jan V3",
+//       file: new URL("../assets/Jan v3.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "jan",
+//       label: "Jan",
+//       file: new URL("../assets/jan.webp", import.meta.url).href,
+//     },
+//   ],
+//   February: [
+//     {
+//       id: "feb-v1",
+//       label: "Feb V1",
+//       file: new URL("../assets/Feb v1.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "feb",
+//       label: "Feb",
+//       file: new URL("../assets/feb.webp", import.meta.url).href,
+//     },
+//   ],
+//   March: [
+//     {
+//       id: "march-v1",
+//       label: "March V1",
+//       file: new URL("../assets/March v1.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "march-v2",
+//       label: "March V2",
+//       file: new URL("../assets/March v2.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "march",
+//       label: "March",
+//       file: new URL("../assets/march.webp", import.meta.url).href,
+//     },
+//   ],
+//   April: [
+//     {
+//       id: "april",
+//       label: "April",
+//       file: new URL("../assets/april.webp", import.meta.url).href,
+//     },
+//   ],
+//   May: [
+//     {
+//       id: "may-v1",
+//       label: "May V1",
+//       file: new URL("../assets/May v1.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "may",
+//       label: "May",
+//       file: new URL("../assets/may.webp", import.meta.url).href,
+//     },
+//   ],
+//   June: [
+//     {
+//       id: "june-v1",
+//       label: "June V1",
+//       file: new URL("../assets/June v1.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "june",
+//       label: "June",
+//       file: new URL("../assets/june.webp", import.meta.url).href,
+//     },
+//   ],
+//   July: [
+//     {
+//       id: "july-v1",
+//       label: "July V1",
+//       file: new URL("../assets/July v1.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "july-v2",
+//       label: "July V2",
+//       file: new URL("../assets/July v2.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "july-v3",
+//       label: "July V3",
+//       file: new URL("../assets/July v3.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "july-v4",
+//       label: "July V4",
+//       file: new URL("../assets/July v4.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "july-v5",
+//       label: "July V5",
+//       file: new URL("../assets/July v5.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "july",
+//       label: "July",
+//       file: new URL("../assets/july.webp", import.meta.url).href,
+//     },
+//   ],
+//   August: [
+//     {
+//       id: "aug-v1",
+//       label: "Aug V1",
+//       file: new URL("../assets/Aug v1.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "aug-v2",
+//       label: "Aug V2",
+//       file: new URL("../assets/Aug v2.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "aug-v3",
+//       label: "Aug V3",
+//       file: new URL("../assets/Aug v3.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "august",
+//       label: "August",
+//       file: new URL("../assets/august.webp", import.meta.url).href,
+//     },
+//   ],
+//   September: [
+//     {
+//       id: "sep-v1",
+//       label: "Sep V1",
+//       file: new URL("../assets/Sep v1.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "sep-v2",
+//       label: "Sep V2",
+//       file: new URL("../assets/Sep v2.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "september",
+//       label: "September",
+//       file: new URL("../assets/september.webp", import.meta.url).href,
+//     },
+//   ],
+//   October: [
+//     {
+//       id: "oct-v1",
+//       label: "Oct V1",
+//       file: new URL("../assets/Oct v1.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "oct",
+//       label: "Oct",
+//       file: new URL("../assets/oct.webp", import.meta.url).href,
+//     },
+//   ],
+//   November: [
+//     {
+//       id: "nov-v1",
+//       label: "Nov V1",
+//       file: new URL("../assets/Nov v1.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "nov",
+//       label: "Nov",
+//       file: new URL("../assets/nov.webp", import.meta.url).href,
+//     },
+//   ],
+//   December: [
+//     {
+//       id: "dec-v1",
+//       label: "Dec V1",
+//       file: new URL("../assets/Dec v1.webp", import.meta.url).href,
+//     },
+//     {
+//       id: "dec",
+//       label: "Dec",
+//       file: new URL("../assets/dec.webp", import.meta.url).href,
+//     },
+//   ],
+// };
 
 // ─── Shared ID resolver ──────────────────────────────────
 // mrId always available from localStorage (logged-in user)
@@ -1033,6 +1034,777 @@ function PreviewModal({ design, month, onClose, onSelect, selected }) {
 //   );
 // }
 
+// export function CalendarMonth() {
+//   const navigate = useNavigate();
+//   const [searchParams] = useSearchParams();
+//   const location = useLocation();
+//   const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+
+//   const [popup, setPopup] = useState({
+//     isOpen: false,
+//     type: "success",
+//     title: "",
+//     message: "",
+//     onConfirm: null,
+//     showConfirmButton: false,
+//     confirmText: "Confirm",
+//   });
+
+//   // State for preview modal
+//   const [previewDesign, setPreviewDesign] = useState(null);
+//   const [previewMonth, setPreviewMonth] = useState("");
+
+//   const showPopup = (type, title, message) => {
+//     setPopup({ isOpen: true, type, title, message });
+//   };
+
+//   const closePopup = () => {
+//     setPopup({
+//       ...popup,
+//       isOpen: false,
+//       onConfirm: null,
+//       showConfirmButton: false,
+//     });
+//   };
+
+//   const CURRENT_DOCTOR_ID =
+//     searchParams.get("doctorId") ||
+//     location.state?.doctorId ||
+//     sessionStorage.getItem("currentDoctorId") ||
+//     localStorage.getItem("currentDoctorId");
+
+//   const CURRENT_MR_ID =
+//     searchParams.get("mrId") ||
+//     location.state?.mrId ||
+//     storedUser.mrId ||
+//     sessionStorage.getItem("currentMrId");
+
+//   const [dbSelections, setDbSelections] = useState({});
+//   const [calendarStatus, setCalendarStatus] = useState("in_progress");
+//   const [loading, setLoading] = useState(true);
+//   const [filterStatus, setFilterStatus] = useState("all");
+
+//   // Validate IDs
+//   useEffect(() => {
+//     if (!CURRENT_DOCTOR_ID) {
+//       console.error("No doctor ID found");
+//       showPopup("error", "No Doctor Selected", "Please select a doctor first");
+//       navigate("/approved-doctors");
+//       return;
+//     }
+
+//     if (!CURRENT_MR_ID) {
+//       console.error("No MR ID found");
+//       const user = JSON.parse(localStorage.getItem("user") || "{}");
+//       if (!user.mrId) {
+//         showPopup("error", "Session Expired", "Please login again");
+//         navigate("/login");
+//       }
+//     }
+//   }, []);
+
+//   useEffect(() => {
+//     if (!CURRENT_DOCTOR_ID) return;
+
+//     console.log("Fetching calendar for doctor:", CURRENT_DOCTOR_ID);
+
+//     fetch(`${API_BASE}/${CURRENT_DOCTOR_ID}?year=${CALENDAR_YEAR}`)
+//       .then((r) => r.json())
+//       .then((data) => {
+//         console.log("Calendar data:", data);
+//         if (data.success && data.selections) {
+//           const map = {};
+//           data.selections.forEach((s) => {
+//             map[s.month] = s.designId;
+//           });
+//           setDbSelections(map);
+//           setCalendarStatus(data.status || "in_progress");
+//         }
+//       })
+//       .catch((err) => console.error("Fetch error:", err))
+//       .finally(() => setLoading(false));
+//   }, [CURRENT_DOCTOR_ID]);
+
+//   // ✅ SIMPLIFIED goToDesign - ALWAYS add unfreeze=true when editing any month
+//   // const goToDesign = (month) => {
+//   //   console.log("🔗 Navigating to design for:", month);
+//   //   // ✅ ALWAYS add unfreeze=true to allow editing
+//   //   const url = `/calendar-design?month=${month}&doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}&unfreeze=true`;
+//   //   console.log("🔗 URL:", url);
+//   //   navigate(url);
+//   // };
+
+//   const goToDesign = (month) => {
+//   console.log("Going to design for month:", month);
+//   console.log("Calendar status:", calendarStatus);
+  
+//   // ✅ If calendar is frozen, show popup and block navigation
+//   if (calendarStatus === "frozen") {
+//     setPopup({
+//       isOpen: true,
+//       type: "warning",
+//       title: "⚠️ Calendar is FROZEN",
+//       message: "This calendar has been frozen and cannot be edited.\n\nTo make changes, you need to unfreeze it first from the Summary page.",
+//       onConfirm: () => {
+//         closePopup();
+//         // Navigate to summary page instead
+//         navigate(
+//           `/calendar-summary?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`
+//         );
+//       },
+//       showConfirmButton: true,
+//       confirmText: "Go to Summary",
+//     });
+//     return;
+//   }
+  
+//   // ✅ Calendar is not frozen - allow navigation
+//   const url = `/calendar-design?month=${month}&doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`;
+//   console.log("🔗 Navigating to:", url);
+//   navigate(url);
+// };
+
+//   const handlePreview = (design, month) => {
+//     setPreviewDesign(design);
+//     setPreviewMonth(month);
+//   };
+
+//   const closePreview = () => {
+//     setPreviewDesign(null);
+//     setPreviewMonth("");
+//   };
+
+//   const getMonthStatus = (month) => {
+//     const isDone = !!dbSelections[month];
+//     if (isDone) return "completed";
+
+//     const currentDate = new Date();
+//     const currentYear = currentDate.getFullYear();
+//     const currentMonth = currentDate.getMonth();
+//     const monthIndex = months.indexOf(month);
+
+//     if (CALENDAR_YEAR > currentYear) {
+//       if (monthIndex <= 2) return "pending";
+//       return "not_started";
+//     }
+
+//     if (CALENDAR_YEAR === currentYear) {
+//       if (monthIndex <= currentMonth + 2 && monthIndex >= currentMonth) {
+//         return "pending";
+//       }
+//       if (monthIndex < currentMonth) {
+//         return "completed";
+//       }
+//     }
+
+//     return "not_started";
+//   };
+
+//   const getFilteredMonths = () => {
+//     if (filterStatus === "all") return months;
+//     return months.filter((month) => getMonthStatus(month) === filterStatus);
+//   };
+
+//   const completedCount = Object.keys(dbSelections).length;
+//   const pendingCount = months.filter(
+//     (m) => getMonthStatus(m) === "pending",
+//   ).length;
+//   const notStartedCount = months.filter(
+//     (m) => getMonthStatus(m) === "not_started",
+//   ).length;
+
+//   if (!CURRENT_DOCTOR_ID) {
+//     return <div>Loading doctor information...</div>;
+//   }
+
+
+
+//   return (
+//     <Layout active="Calendar Selection">
+//       <Crumbs items={["Calendar Selection"]} />
+
+//       <div
+//         style={{
+//           display: "flex",
+//           justifyContent: "space-between",
+//           alignItems: "center",
+//           marginBottom: 16,
+//         }}
+//       >
+//         <div>
+//           <h1>Calendar Selection</h1>
+//           <p className="subtitle">
+//             Select a month to choose and customize the calendar design.
+//           </p>
+//         </div>
+//         <Button
+//           variant="outline"
+//           icon={CalendarCheck}
+//           onClick={() =>
+//             navigate(
+//               `/calendar-summary?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`,
+//             )
+//           }
+//         >
+//           View Summary
+//         </Button>
+//       </div>
+//       <div className="notice">
+      
+//         <Info />
+//         Select one month at a time and choose the preferred design in the next
+//         step.
+//         {calendarStatus === "frozen" && (
+//           <b style={{ marginLeft: 8, color: "#16a34a" }}>
+//             ✓ Calendar is frozen.
+//           </b>
+//         )}
+//       </div>
+
+//       {/* Clickable Filter Badges */}
+//       <div
+//         className="legend"
+//         style={{
+//           display: "flex",
+//           gap: "12px",
+//           marginBottom: "20px",
+//           cursor: "pointer",
+//         }}
+//       >
+//         <div
+//           onClick={() => setFilterStatus("all")}
+//           style={{
+//             opacity: filterStatus === "all" ? 1 : 0.6,
+//             cursor: "pointer",
+//             transition: "opacity 0.2s",
+//           }}
+//         >
+//           <Badge tone="blue">All ({12})</Badge>
+//         </div>
+//         <div
+//           onClick={() => setFilterStatus("completed")}
+//           style={{
+//             opacity: filterStatus === "completed" ? 1 : 0.6,
+//             cursor: "pointer",
+//             transition: "opacity 0.2s",
+//           }}
+//         >
+//           <Badge tone="green">Completed ({completedCount})</Badge>
+//         </div>
+//         <div
+//           onClick={() => setFilterStatus("pending")}
+//           style={{
+//             opacity: filterStatus === "pending" ? 1 : 0.6,
+//             cursor: "pointer",
+//             transition: "opacity 0.2s",
+//           }}
+//         >
+//           <Badge tone="orange">Pending ({pendingCount})</Badge>
+//         </div>
+//         <div
+//           onClick={() => setFilterStatus("not_started")}
+//           style={{
+//             opacity: filterStatus === "not_started" ? 1 : 0.6,
+//             cursor: "pointer",
+//             transition: "opacity 0.2s",
+//           }}
+//         >
+//           <Badge tone="blue">Not Started ({notStartedCount})</Badge>
+//         </div>
+//       </div>
+
+//       {loading ? (
+//         <p style={{ padding: 24, color: "#6b7280" }}>Loading selections…</p>
+//       ) : (
+//         <div className="monthGrid">
+//           {getFilteredMonths().map((m) => {
+//             const isDone = !!dbSelections[m];
+//             const status = getMonthStatus(m);
+//             const selectedDesignId = dbSelections[m];
+
+//             const selectedDesign = selectedDesignId
+//               ? designAssets[m]?.find((d) => d.id === selectedDesignId)
+//               : null;
+
+//             let icon = RotateCcw;
+//             let tone = "blue";
+//             let statusText = "Not Started";
+//             let statusColor = "#94a3b8";
+
+//             if (isDone) {
+//               icon = CheckCircle2;
+//               tone = "green";
+//               statusText = "Completed";
+//               statusColor = "#10b981";
+//             } else if (status === "pending") {
+//               icon = Clock3;
+//               tone = "orange";
+//               statusText = "Pending";
+//               statusColor = "#f59e0b";
+//             }
+
+//             return (
+//               <div
+//                 key={m}
+//                 className={cls("monthCard", isDone && "done")}
+//                 style={{
+//                   position: "relative",
+//                   background: "white",
+//                   borderRadius: "12px",
+//                   padding: "16px",
+//                   boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+//                   transition: "all 0.2s",
+//                   display: "flex",
+//                   flexDirection: "column",
+//                   alignItems: "center",
+//                   textAlign: "center",
+//                   border: "1px solid #e5e7eb",
+//                 }}
+//                 onMouseEnter={(e) => {
+//                   e.currentTarget.style.transform = "translateY(-4px)";
+//                   e.currentTarget.style.boxShadow =
+//                     "0 4px 12px rgba(0,0,0,0.1)";
+//                 }}
+//                 onMouseLeave={(e) => {
+//                   e.currentTarget.style.transform = "translateY(0)";
+//                   e.currentTarget.style.boxShadow = "0 1px 3px rgba(0,0,0,0.1)";
+//                 }}
+//               >
+//                 {/* Month Name */}
+//                 <div
+//                   style={{
+//                     fontSize: "18px",
+//                     fontWeight: "bold",
+//                     color: "#1a1a2e",
+//                     marginBottom: "8px",
+//                   }}
+//                 >
+//                   {m}
+//                 </div>
+
+//                 {/* Year */}
+//                 <div
+//                   style={{
+//                     fontSize: "12px",
+//                     color: "#666",
+//                     marginBottom: "8px",
+//                   }}
+//                 >
+//                   {CALENDAR_YEAR}
+//                 </div>
+
+//                 {/* Design Thumbnail */}
+              
+//                  {selectedDesign ? (
+//   <div
+//     style={{
+//       width: "100%",
+//       height: "140px",
+//       overflow: "hidden",
+//       borderRadius: "8px",
+//       marginBottom: "12px",
+//       position: "relative",
+//       border: `2px solid ${statusColor}`,
+//       cursor: calendarStatus === "frozen" ? "not-allowed" : "pointer",
+//       background: "#f9fafb",
+//       opacity: calendarStatus === "frozen" ? 0.6 : 1,
+//     }}
+//     onClick={() => {
+//       if (calendarStatus === "frozen") {
+//         setPopup({
+//           isOpen: true,
+//           type: "warning",
+//           title: "⚠️ Calendar is FROZEN",
+//           message: "This calendar has been frozen and cannot be edited.\n\nTo make changes, you need to unfreeze it first from the Summary page.",
+//           onConfirm: () => {
+//             closePopup();
+//             navigate(
+//               `/calendar-summary?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`
+//             );
+//           },
+//           showConfirmButton: true,
+//           confirmText: "Go to Summary",
+//         });
+//       } else {
+//         goToDesign(m);
+//       }
+//     }}
+//   >
+//                     <img
+//                       src={selectedDesign.file}
+//                       alt={selectedDesign.label}
+//                       style={{
+//                         width: "100%",
+//                         height: "100%",
+//                         objectFit: "cover",
+//                       }}
+//                       onError={(e) => {
+//                         e.target.src =
+//                           'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="%23999" stroke-width="2"%3E%3Crect x="2" y="2" width="20" height="20" rx="2.18"/%3E%3Ccircle cx="8.5" cy="8.5" r="2.5"/%3E%3Cpath d="M21 15l-5-5-6 6-3-3-4 4"/%3E%3C/svg%3E';
+//                       }}
+//                     />
+//                     {isDone && (
+//                       <div
+//                         style={{
+//                           position: "absolute",
+//                           top: "8px",
+//                           right: "8px",
+//                           background: "#10b981",
+//                           color: "white",
+//                           borderRadius: "50%",
+//                           width: "24px",
+//                           height: "24px",
+//                           display: "flex",
+//                           alignItems: "center",
+//                           justifyContent: "center",
+//                           fontSize: "12px",
+//                         }}
+//                       >
+//                         <Check size={14} />
+//                       </div>
+//                     )}
+//                   </div>
+//                                ) : (
+//                   <div
+//                     style={{
+//                       width: "100%",
+//                       height: "140px",
+//                       borderRadius: "8px",
+//                       marginBottom: "12px",
+//                       background: "#f3f4f6",
+//                       border: `2px dashed ${statusColor}`,
+//                       display: "flex",
+//                       alignItems: "center",
+//                       justifyContent: "center",
+//                       flexDirection: "column",
+//                       cursor: calendarStatus === "frozen" ? "not-allowed" : "pointer",
+//                       color: "#9ca3af",
+//                       opacity: calendarStatus === "frozen" ? 0.6 : 1,
+//                     }}
+//                     onClick={() => {
+//                       if (calendarStatus === "frozen") {
+//                         setPopup({
+//                           isOpen: true,
+//                           type: "warning",
+//                           title: "⚠️ Calendar is FROZEN",
+//                           message: "This calendar has been frozen and cannot be edited.\n\nTo make changes, you need to unfreeze it first from the Summary page.",
+//                           onConfirm: () => {
+//                             closePopup();
+//                             navigate(
+//                               `/calendar-summary?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`
+//                             );
+//                           },
+//                           showConfirmButton: true,
+//                           confirmText: "Go to Summary",
+//                         });
+//                       } else {
+//                         goToDesign(m);
+//                       }
+//                     }}
+//                   >
+//                     <span style={{ fontSize: "32px", marginBottom: "8px" }}>
+//                       🖼️
+//                     </span>
+//                     <span style={{ fontSize: "12px" }}>No design selected</span>
+//                   </div>
+//                 )}
+
+//                 {/* Action Buttons */}
+//                 <div
+//                   style={{
+//                     display: "flex",
+//                     gap: "8px",
+//                     width: "100%",
+//                     marginBottom: "8px",
+//                   }}
+//                 >
+//                   {selectedDesign && (
+//                     <Button
+//                       variant="outline"
+//                       icon={Eye}
+//                       onClick={() => handlePreview(selectedDesign, m)}
+//                       style={{
+//                         flex: 1,
+//                         justifyContent: "center",
+//                         fontSize: "12px",
+//                         padding: "6px 12px",
+//                       }}
+//                     >
+//                       Preview
+//                     </Button>
+//                   )}
+//                  <Button
+//   variant={isDone ? "outline" : "primary"}
+//   icon={isDone ? Pencil : undefined}
+//   onClick={() => goToDesign(m)}
+//   disabled={calendarStatus === "frozen"}
+//   style={{
+//     flex: selectedDesign ? 1 : 1,
+//     justifyContent: "center",
+//     fontSize: "12px",
+//     padding: "6px 12px",
+//     opacity: calendarStatus === "frozen" ? 0.6 : 1,
+//     cursor: calendarStatus === "frozen" ? "not-allowed" : "pointer",
+//   }}
+// >
+//   {calendarStatus === "frozen" ? " Frozen" : (isDone ? "Change" : "Select")}
+// </Button>
+//                 </div>
+
+//                 {/* Status Badge */}
+//                 <Badge tone={tone} style={{ marginTop: "4px" }}>
+//                   {statusText}
+//                 </Badge>
+//               </div>
+//             );
+//           })}
+//         </div>
+//       )}
+
+//       {/* Show message when no months match filter */}
+//       {!loading && getFilteredMonths().length === 0 && (
+//         <div className="notice" style={{ textAlign: "center", marginTop: 24 }}>
+//           <Info />
+//           <span>No months found with the selected filter.</span>
+//         </div>
+//       )}
+
+//       {/* Freeze Calendar Button */}
+//       {completedCount === 12 && calendarStatus !== "frozen" && (
+//         <div
+//           style={{
+//             marginTop: "32px",
+//             padding: "20px",
+//             background: "#f0fdf4",
+//             borderRadius: "12px",
+//             border: "1px solid #bbf7d0",
+//             textAlign: "center",
+//           }}
+//         >
+//           <p style={{ marginBottom: "12px", color: "#065f46" }}>
+//              All 12 months have been selected! You can now freeze the
+//             calendar.
+//           </p>
+//           <Button
+//             variant="primary"
+//             icon={Lock}
+//             onClick={() =>
+//               navigate(
+//                 `/calendar-summary?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`,
+//               )
+//             }
+//             style={{
+//               minWidth: "250px",
+//               fontSize: "16px",
+//               padding: "12px 24px",
+//             }}
+//           >
+//             Freeze Calendar
+//           </Button>
+//         </div>
+//       )}
+
+//       {/* Show frozen status if already frozen */}
+//       {calendarStatus === "frozen" && (
+//         <div
+//           style={{
+//             marginTop: "32px",
+//             padding: "20px",
+//             background: "#dbeafe",
+//             borderRadius: "12px",
+//             border: "1px solid #bfdbfe",
+//             textAlign: "center",
+//           }}
+//         >
+//           <p style={{ marginBottom: "12px", color: "#1e40af" }}>
+//             ❄️ This calendar is <b>FROZEN</b>. You can still change designs, but
+//             it will unfreeze.
+//           </p>
+//           <Button
+//             variant="outline"
+//             icon={Eye}
+//             onClick={() =>
+//               navigate(
+//                 `/calendar-summary?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`,
+//               )
+//             }
+//             style={{ minWidth: "200px" }}
+//           >
+//             View Summary
+//           </Button>
+//         </div>
+//       )}
+
+//       {/* Preview Modal */}
+//       {previewDesign && (
+//         <div
+//           style={{
+//             position: "fixed",
+//             inset: 0,
+//             zIndex: 1000,
+//             background: "rgba(0,0,0,0.75)",
+//             display: "flex",
+//             alignItems: "center",
+//             justifyContent: "center",
+//             padding: 24,
+//           }}
+//           onClick={closePreview}
+//         >
+//           <div
+//             style={{
+//               background: "#fff",
+//               borderRadius: 16,
+//               overflow: "hidden",
+//               maxWidth: 700,
+//               width: "100%",
+//               maxHeight: "90vh",
+//               boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
+//               display: "flex",
+//               flexDirection: "column",
+//             }}
+//             onClick={(e) => e.stopPropagation()}
+//           >
+//             <div
+//               style={{
+//                 display: "flex",
+//                 alignItems: "center",
+//                 justifyContent: "space-between",
+//                 padding: "14px 20px",
+//                 borderBottom: "1px solid #f3f4f6",
+//                 flexShrink: 0,
+//               }}
+//             >
+//               <div>
+//                 <div style={{ fontWeight: 700, fontSize: 16 }}>
+//                   {previewDesign.label} — {previewMonth} {CALENDAR_YEAR}
+//                 </div>
+//                 <div style={{ fontSize: 12, color: "#6b7280" }}>
+//                   Code: {previewDesign.id}
+//                 </div>
+//               </div>
+//               <button
+//                 onClick={closePreview}
+//                 style={{
+//                   background: "none",
+//                   border: "none",
+//                   cursor: "pointer",
+//                   fontSize: 24,
+//                   color: "#6b7280",
+//                   padding: "4px 8px",
+//                 }}
+//               >
+//                 ✕
+//               </button>
+//             </div>
+
+//             <div
+//               style={{
+//                 flex: 1,
+//                 overflow: "auto",
+//                 display: "flex",
+//                 alignItems: "center",
+//                 justifyContent: "center",
+//                 padding: "16px",
+//                 background: "#f9fafb",
+//                 minHeight: "300px",
+//               }}
+//             >
+//               <img
+//                 src={previewDesign.file}
+//                 alt={previewDesign.label}
+//                 style={{
+//                   maxWidth: "100%",
+//                   maxHeight: "60vh",
+//                   objectFit: "contain",
+//                   borderRadius: "8px",
+//                   boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+//                 }}
+//                 onError={(e) => {
+//                   e.target.src =
+//                     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Crect x='2' y='2' width='20' height='20' rx='2.18'/%3E%3Ccircle cx='8.5' cy='8.5' r='2.5'/%3E%3Cpath d='M21 15l-5-5-6 6-3-3-4 4'/%3E%3C/svg%3E";
+//                   e.target.style.width = "200px";
+//                   e.target.style.height = "200px";
+//                   e.target.style.objectFit = "contain";
+//                 }}
+//               />
+//             </div>
+
+//             <div
+//               style={{
+//                 padding: "14px 20px",
+//                 display: "flex",
+//                 gap: 10,
+//                 justifyContent: "flex-end",
+//                 borderTop: "1px solid #f3f4f6",
+//                 flexShrink: 0,
+//               }}
+//             >
+//               <button
+//                 onClick={closePreview}
+//                 style={{
+//                   padding: "8px 18px",
+//                   borderRadius: 8,
+//                   border: "1.5px solid #e5e7eb",
+//                   background: "#fff",
+//                   cursor: "pointer",
+//                   fontWeight: 600,
+//                   fontSize: 13,
+//                 }}
+//               >
+//                 Close
+//               </button>
+//               <button
+//                 onClick={() => {
+//                   closePreview();
+//                   goToDesign(previewMonth);
+//                 }}
+//                 style={{
+//                   padding: "8px 18px",
+//                   borderRadius: 8,
+//                   border: "none",
+//                   background: "#0b55f4",
+//                   color: "#fff",
+//                   cursor: "pointer",
+//                   fontWeight: 600,
+//                   fontSize: 13,
+//                   display: "flex",
+//                   alignItems: "center",
+//                   gap: 6,
+//                 }}
+//               >
+//                 <Pencil size={14} />
+//                 Edit Design
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+
+//       {/* Popup */}
+//       <Popup
+//         isOpen={popup.isOpen}
+//         type={popup.type}
+//         title={popup.title}
+//         message={popup.message}
+//         onClose={closePopup}
+//       />
+
+//       <style>{`
+//         .monthCard {
+//           transition: all 0.2s ease;
+//         }
+//         .monthCard .design-thumbnail {
+//           position: relative;
+//           cursor: pointer;
+//         }
+//         .monthCard .design-thumbnail:hover {
+//           opacity: 0.9;
+//         }
+//       `}</style>
+//     </Layout>
+//   );
+// }
+
 export function CalendarMonth() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -1072,16 +1844,35 @@ export function CalendarMonth() {
     sessionStorage.getItem("currentDoctorId") ||
     localStorage.getItem("currentDoctorId");
 
-  const CURRENT_MR_ID =
-    searchParams.get("mrId") ||
-    location.state?.mrId ||
-    storedUser.mrId ||
-    sessionStorage.getItem("currentMrId");
+const CURRENT_MR_ID = storedUser.mrId; // Always use the logged-in user's mrId string
 
-  const [dbSelections, setDbSelections] = useState({});
+  // We still need calendarStatus and loading for the notice and View Summary button
   const [calendarStatus, setCalendarStatus] = useState("in_progress");
   const [loading, setLoading] = useState(true);
-  const [filterStatus, setFilterStatus] = useState("all");
+
+  useEffect(() => {
+    if (!CURRENT_DOCTOR_ID) return;
+
+    fetch(`${API_BASE}/${CURRENT_DOCTOR_ID}?year=${CALENDAR_YEAR}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.success && data.selections) {
+          setCalendarStatus(data.status || "in_progress");
+        }
+      })
+      .catch((err) => console.error("Fetch error:", err))
+      .finally(() => setLoading(false));
+  }, [CURRENT_DOCTOR_ID]);
+
+  // Preview handlers (keep if needed)
+  const handlePreview = (design, month) => {
+    setPreviewDesign(design);
+    setPreviewMonth(month);
+  };
+  const closePreview = () => {
+    setPreviewDesign(null);
+    setPreviewMonth("");
+  };
 
   // Validate IDs
   useEffect(() => {
@@ -1091,9 +1882,7 @@ export function CalendarMonth() {
       navigate("/approved-doctors");
       return;
     }
-
     if (!CURRENT_MR_ID) {
-      console.error("No MR ID found");
       const user = JSON.parse(localStorage.getItem("user") || "{}");
       if (!user.mrId) {
         showPopup("error", "Session Expired", "Please login again");
@@ -1101,116 +1890,6 @@ export function CalendarMonth() {
       }
     }
   }, []);
-
-  useEffect(() => {
-    if (!CURRENT_DOCTOR_ID) return;
-
-    console.log("Fetching calendar for doctor:", CURRENT_DOCTOR_ID);
-
-    fetch(`${API_BASE}/${CURRENT_DOCTOR_ID}?year=${CALENDAR_YEAR}`)
-      .then((r) => r.json())
-      .then((data) => {
-        console.log("Calendar data:", data);
-        if (data.success && data.selections) {
-          const map = {};
-          data.selections.forEach((s) => {
-            map[s.month] = s.designId;
-          });
-          setDbSelections(map);
-          setCalendarStatus(data.status || "in_progress");
-        }
-      })
-      .catch((err) => console.error("Fetch error:", err))
-      .finally(() => setLoading(false));
-  }, [CURRENT_DOCTOR_ID]);
-
-  // ✅ SIMPLIFIED goToDesign - ALWAYS add unfreeze=true when editing any month
-  // const goToDesign = (month) => {
-  //   console.log("🔗 Navigating to design for:", month);
-  //   // ✅ ALWAYS add unfreeze=true to allow editing
-  //   const url = `/calendar-design?month=${month}&doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}&unfreeze=true`;
-  //   console.log("🔗 URL:", url);
-  //   navigate(url);
-  // };
-
-  const goToDesign = (month) => {
-  console.log("Going to design for month:", month);
-  console.log("Calendar status:", calendarStatus);
-  
-  // ✅ If calendar is frozen, show popup and block navigation
-  if (calendarStatus === "frozen") {
-    setPopup({
-      isOpen: true,
-      type: "warning",
-      title: "⚠️ Calendar is FROZEN",
-      message: "This calendar has been frozen and cannot be edited.\n\nTo make changes, you need to unfreeze it first from the Summary page.",
-      onConfirm: () => {
-        closePopup();
-        // Navigate to summary page instead
-        navigate(
-          `/calendar-summary?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`
-        );
-      },
-      showConfirmButton: true,
-      confirmText: "Go to Summary",
-    });
-    return;
-  }
-  
-  // ✅ Calendar is not frozen - allow navigation
-  const url = `/calendar-design?month=${month}&doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`;
-  console.log("🔗 Navigating to:", url);
-  navigate(url);
-};
-
-  const handlePreview = (design, month) => {
-    setPreviewDesign(design);
-    setPreviewMonth(month);
-  };
-
-  const closePreview = () => {
-    setPreviewDesign(null);
-    setPreviewMonth("");
-  };
-
-  const getMonthStatus = (month) => {
-    const isDone = !!dbSelections[month];
-    if (isDone) return "completed";
-
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth();
-    const monthIndex = months.indexOf(month);
-
-    if (CALENDAR_YEAR > currentYear) {
-      if (monthIndex <= 2) return "pending";
-      return "not_started";
-    }
-
-    if (CALENDAR_YEAR === currentYear) {
-      if (monthIndex <= currentMonth + 2 && monthIndex >= currentMonth) {
-        return "pending";
-      }
-      if (monthIndex < currentMonth) {
-        return "completed";
-      }
-    }
-
-    return "not_started";
-  };
-
-  const getFilteredMonths = () => {
-    if (filterStatus === "all") return months;
-    return months.filter((month) => getMonthStatus(month) === filterStatus);
-  };
-
-  const completedCount = Object.keys(dbSelections).length;
-  const pendingCount = months.filter(
-    (m) => getMonthStatus(m) === "pending",
-  ).length;
-  const notStartedCount = months.filter(
-    (m) => getMonthStatus(m) === "not_started",
-  ).length;
 
   if (!CURRENT_DOCTOR_ID) {
     return <div>Loading doctor information...</div>;
@@ -1239,7 +1918,7 @@ export function CalendarMonth() {
           icon={CalendarCheck}
           onClick={() =>
             navigate(
-              `/calendar-summary?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`,
+              `/calendar-summary?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`
             )
           }
         >
@@ -1258,381 +1937,14 @@ export function CalendarMonth() {
         )}
       </div>
 
-      {/* Clickable Filter Badges */}
-      <div
-        className="legend"
-        style={{
-          display: "flex",
-          gap: "12px",
-          marginBottom: "20px",
-          cursor: "pointer",
-        }}
-      >
-        <div
-          onClick={() => setFilterStatus("all")}
-          style={{
-            opacity: filterStatus === "all" ? 1 : 0.6,
-            cursor: "pointer",
-            transition: "opacity 0.2s",
-          }}
-        >
-          <Badge tone="blue">All ({12})</Badge>
-        </div>
-        <div
-          onClick={() => setFilterStatus("completed")}
-          style={{
-            opacity: filterStatus === "completed" ? 1 : 0.6,
-            cursor: "pointer",
-            transition: "opacity 0.2s",
-          }}
-        >
-          <Badge tone="green">Completed ({completedCount})</Badge>
-        </div>
-        <div
-          onClick={() => setFilterStatus("pending")}
-          style={{
-            opacity: filterStatus === "pending" ? 1 : 0.6,
-            cursor: "pointer",
-            transition: "opacity 0.2s",
-          }}
-        >
-          <Badge tone="orange">Pending ({pendingCount})</Badge>
-        </div>
-        <div
-          onClick={() => setFilterStatus("not_started")}
-          style={{
-            opacity: filterStatus === "not_started" ? 1 : 0.6,
-            cursor: "pointer",
-            transition: "opacity 0.2s",
-          }}
-        >
-          <Badge tone="blue">Not Started ({notStartedCount})</Badge>
-        </div>
-      </div>
+      {/* ✅ Use the reusable component */}
+      <CalendarMonthGrid
+        doctorId={CURRENT_DOCTOR_ID}
+        mrId={CURRENT_MR_ID}
+        isFrozen={calendarStatus === "frozen"}
+      />
 
-      {loading ? (
-        <p style={{ padding: 24, color: "#6b7280" }}>Loading selections…</p>
-      ) : (
-        <div className="monthGrid">
-          {getFilteredMonths().map((m) => {
-            const isDone = !!dbSelections[m];
-            const status = getMonthStatus(m);
-            const selectedDesignId = dbSelections[m];
-
-            const selectedDesign = selectedDesignId
-              ? designAssets[m]?.find((d) => d.id === selectedDesignId)
-              : null;
-
-            let icon = RotateCcw;
-            let tone = "blue";
-            let statusText = "Not Started";
-            let statusColor = "#94a3b8";
-
-            if (isDone) {
-              icon = CheckCircle2;
-              tone = "green";
-              statusText = "Completed";
-              statusColor = "#10b981";
-            } else if (status === "pending") {
-              icon = Clock3;
-              tone = "orange";
-              statusText = "Pending";
-              statusColor = "#f59e0b";
-            }
-
-            return (
-              <div
-                key={m}
-                className={cls("monthCard", isDone && "done")}
-                style={{
-                  position: "relative",
-                  background: "white",
-                  borderRadius: "12px",
-                  padding: "16px",
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-                  transition: "all 0.2s",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  textAlign: "center",
-                  border: "1px solid #e5e7eb",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-4px)";
-                  e.currentTarget.style.boxShadow =
-                    "0 4px 12px rgba(0,0,0,0.1)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "0 1px 3px rgba(0,0,0,0.1)";
-                }}
-              >
-                {/* Month Name */}
-                <div
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: "bold",
-                    color: "#1a1a2e",
-                    marginBottom: "8px",
-                  }}
-                >
-                  {m}
-                </div>
-
-                {/* Year */}
-                <div
-                  style={{
-                    fontSize: "12px",
-                    color: "#666",
-                    marginBottom: "8px",
-                  }}
-                >
-                  {CALENDAR_YEAR}
-                </div>
-
-                {/* Design Thumbnail */}
-              
-                 {selectedDesign ? (
-  <div
-    style={{
-      width: "100%",
-      height: "140px",
-      overflow: "hidden",
-      borderRadius: "8px",
-      marginBottom: "12px",
-      position: "relative",
-      border: `2px solid ${statusColor}`,
-      cursor: calendarStatus === "frozen" ? "not-allowed" : "pointer",
-      background: "#f9fafb",
-      opacity: calendarStatus === "frozen" ? 0.6 : 1,
-    }}
-    onClick={() => {
-      if (calendarStatus === "frozen") {
-        setPopup({
-          isOpen: true,
-          type: "warning",
-          title: "⚠️ Calendar is FROZEN",
-          message: "This calendar has been frozen and cannot be edited.\n\nTo make changes, you need to unfreeze it first from the Summary page.",
-          onConfirm: () => {
-            closePopup();
-            navigate(
-              `/calendar-summary?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`
-            );
-          },
-          showConfirmButton: true,
-          confirmText: "Go to Summary",
-        });
-      } else {
-        goToDesign(m);
-      }
-    }}
-  >
-                    <img
-                      src={selectedDesign.file}
-                      alt={selectedDesign.label}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
-                      onError={(e) => {
-                        e.target.src =
-                          'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="%23999" stroke-width="2"%3E%3Crect x="2" y="2" width="20" height="20" rx="2.18"/%3E%3Ccircle cx="8.5" cy="8.5" r="2.5"/%3E%3Cpath d="M21 15l-5-5-6 6-3-3-4 4"/%3E%3C/svg%3E';
-                      }}
-                    />
-                    {isDone && (
-                      <div
-                        style={{
-                          position: "absolute",
-                          top: "8px",
-                          right: "8px",
-                          background: "#10b981",
-                          color: "white",
-                          borderRadius: "50%",
-                          width: "24px",
-                          height: "24px",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontSize: "12px",
-                        }}
-                      >
-                        <Check size={14} />
-                      </div>
-                    )}
-                  </div>
-                               ) : (
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "140px",
-                      borderRadius: "8px",
-                      marginBottom: "12px",
-                      background: "#f3f4f6",
-                      border: `2px dashed ${statusColor}`,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexDirection: "column",
-                      cursor: calendarStatus === "frozen" ? "not-allowed" : "pointer",
-                      color: "#9ca3af",
-                      opacity: calendarStatus === "frozen" ? 0.6 : 1,
-                    }}
-                    onClick={() => {
-                      if (calendarStatus === "frozen") {
-                        setPopup({
-                          isOpen: true,
-                          type: "warning",
-                          title: "⚠️ Calendar is FROZEN",
-                          message: "This calendar has been frozen and cannot be edited.\n\nTo make changes, you need to unfreeze it first from the Summary page.",
-                          onConfirm: () => {
-                            closePopup();
-                            navigate(
-                              `/calendar-summary?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`
-                            );
-                          },
-                          showConfirmButton: true,
-                          confirmText: "Go to Summary",
-                        });
-                      } else {
-                        goToDesign(m);
-                      }
-                    }}
-                  >
-                    <span style={{ fontSize: "32px", marginBottom: "8px" }}>
-                      🖼️
-                    </span>
-                    <span style={{ fontSize: "12px" }}>No design selected</span>
-                  </div>
-                )}
-
-                {/* Action Buttons */}
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "8px",
-                    width: "100%",
-                    marginBottom: "8px",
-                  }}
-                >
-                  {selectedDesign && (
-                    <Button
-                      variant="outline"
-                      icon={Eye}
-                      onClick={() => handlePreview(selectedDesign, m)}
-                      style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        fontSize: "12px",
-                        padding: "6px 12px",
-                      }}
-                    >
-                      Preview
-                    </Button>
-                  )}
-                 <Button
-  variant={isDone ? "outline" : "primary"}
-  icon={isDone ? Pencil : undefined}
-  onClick={() => goToDesign(m)}
-  disabled={calendarStatus === "frozen"}
-  style={{
-    flex: selectedDesign ? 1 : 1,
-    justifyContent: "center",
-    fontSize: "12px",
-    padding: "6px 12px",
-    opacity: calendarStatus === "frozen" ? 0.6 : 1,
-    cursor: calendarStatus === "frozen" ? "not-allowed" : "pointer",
-  }}
->
-  {calendarStatus === "frozen" ? " Frozen" : (isDone ? "Change" : "Select")}
-</Button>
-                </div>
-
-                {/* Status Badge */}
-                <Badge tone={tone} style={{ marginTop: "4px" }}>
-                  {statusText}
-                </Badge>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {/* Show message when no months match filter */}
-      {!loading && getFilteredMonths().length === 0 && (
-        <div className="notice" style={{ textAlign: "center", marginTop: 24 }}>
-          <Info />
-          <span>No months found with the selected filter.</span>
-        </div>
-      )}
-
-      {/* Freeze Calendar Button */}
-      {completedCount === 12 && calendarStatus !== "frozen" && (
-        <div
-          style={{
-            marginTop: "32px",
-            padding: "20px",
-            background: "#f0fdf4",
-            borderRadius: "12px",
-            border: "1px solid #bbf7d0",
-            textAlign: "center",
-          }}
-        >
-          <p style={{ marginBottom: "12px", color: "#065f46" }}>
-             All 12 months have been selected! You can now freeze the
-            calendar.
-          </p>
-          <Button
-            variant="primary"
-            icon={Lock}
-            onClick={() =>
-              navigate(
-                `/calendar-summary?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`,
-              )
-            }
-            style={{
-              minWidth: "250px",
-              fontSize: "16px",
-              padding: "12px 24px",
-            }}
-          >
-            Freeze Calendar
-          </Button>
-        </div>
-      )}
-
-      {/* Show frozen status if already frozen */}
-      {calendarStatus === "frozen" && (
-        <div
-          style={{
-            marginTop: "32px",
-            padding: "20px",
-            background: "#dbeafe",
-            borderRadius: "12px",
-            border: "1px solid #bfdbfe",
-            textAlign: "center",
-          }}
-        >
-          <p style={{ marginBottom: "12px", color: "#1e40af" }}>
-            ❄️ This calendar is <b>FROZEN</b>. You can still change designs, but
-            it will unfreeze.
-          </p>
-          <Button
-            variant="outline"
-            icon={Eye}
-            onClick={() =>
-              navigate(
-                `/calendar-summary?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`,
-              )
-            }
-            style={{ minWidth: "200px" }}
-          >
-            View Summary
-          </Button>
-        </div>
-      )}
-
-      {/* Preview Modal */}
+      {/* Preview Modal (keep if you need it) */}
       {previewDesign && (
         <div
           style={{
@@ -1647,133 +1959,7 @@ export function CalendarMonth() {
           }}
           onClick={closePreview}
         >
-          <div
-            style={{
-              background: "#fff",
-              borderRadius: 16,
-              overflow: "hidden",
-              maxWidth: 700,
-              width: "100%",
-              maxHeight: "90vh",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
-              display: "flex",
-              flexDirection: "column",
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: "14px 20px",
-                borderBottom: "1px solid #f3f4f6",
-                flexShrink: 0,
-              }}
-            >
-              <div>
-                <div style={{ fontWeight: 700, fontSize: 16 }}>
-                  {previewDesign.label} — {previewMonth} {CALENDAR_YEAR}
-                </div>
-                <div style={{ fontSize: 12, color: "#6b7280" }}>
-                  Code: {previewDesign.id}
-                </div>
-              </div>
-              <button
-                onClick={closePreview}
-                style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  fontSize: 24,
-                  color: "#6b7280",
-                  padding: "4px 8px",
-                }}
-              >
-                ✕
-              </button>
-            </div>
-
-            <div
-              style={{
-                flex: 1,
-                overflow: "auto",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: "16px",
-                background: "#f9fafb",
-                minHeight: "300px",
-              }}
-            >
-              <img
-                src={previewDesign.file}
-                alt={previewDesign.label}
-                style={{
-                  maxWidth: "100%",
-                  maxHeight: "60vh",
-                  objectFit: "contain",
-                  borderRadius: "8px",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                }}
-                onError={(e) => {
-                  e.target.src =
-                    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Crect x='2' y='2' width='20' height='20' rx='2.18'/%3E%3Ccircle cx='8.5' cy='8.5' r='2.5'/%3E%3Cpath d='M21 15l-5-5-6 6-3-3-4 4'/%3E%3C/svg%3E";
-                  e.target.style.width = "200px";
-                  e.target.style.height = "200px";
-                  e.target.style.objectFit = "contain";
-                }}
-              />
-            </div>
-
-            <div
-              style={{
-                padding: "14px 20px",
-                display: "flex",
-                gap: 10,
-                justifyContent: "flex-end",
-                borderTop: "1px solid #f3f4f6",
-                flexShrink: 0,
-              }}
-            >
-              <button
-                onClick={closePreview}
-                style={{
-                  padding: "8px 18px",
-                  borderRadius: 8,
-                  border: "1.5px solid #e5e7eb",
-                  background: "#fff",
-                  cursor: "pointer",
-                  fontWeight: 600,
-                  fontSize: 13,
-                }}
-              >
-                Close
-              </button>
-              <button
-                onClick={() => {
-                  closePreview();
-                  goToDesign(previewMonth);
-                }}
-                style={{
-                  padding: "8px 18px",
-                  borderRadius: 8,
-                  border: "none",
-                  background: "#0b55f4",
-                  color: "#fff",
-                  cursor: "pointer",
-                  fontWeight: 600,
-                  fontSize: 13,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                }}
-              >
-                <Pencil size={14} />
-                Edit Design
-              </button>
-            </div>
-          </div>
+          {/* ... your preview modal content ... */}
         </div>
       )}
 
@@ -1784,23 +1970,14 @@ export function CalendarMonth() {
         title={popup.title}
         message={popup.message}
         onClose={closePopup}
+        onConfirm={popup.onConfirm}
+        showConfirmButton={popup.showConfirmButton}
+        confirmText={popup.confirmText}
       />
-
-      <style>{`
-        .monthCard {
-          transition: all 0.2s ease;
-        }
-        .monthCard .design-thumbnail {
-          position: relative;
-          cursor: pointer;
-        }
-        .monthCard .design-thumbnail:hover {
-          opacity: 0.9;
-        }
-      `}</style>
     </Layout>
   );
 }
+
 export function DesignSelect() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -1856,11 +2033,7 @@ export function DesignSelect() {
     sessionStorage.getItem("currentDoctorId") ||
     localStorage.getItem("currentDoctorId");
 
-  const CURRENT_MR_ID =
-    mrIdFromUrl ||
-    location.state?.mrId ||
-    storedUser.mrId ||
-    sessionStorage.getItem("currentMrId");
+const CURRENT_MR_ID = storedUser.mrId; // Always use the logged-in user's mrId string
 
   const [activeMonth, setActiveMonth] = useState(monthFromUrl || "January");
   const [selectedId, setSelectedId] = useState(null);
@@ -1875,6 +2048,18 @@ export function DesignSelect() {
   const [doctorName, setDoctorName] = useState("");
 
   const designs = designAssets[activeMonth] || [];
+ // ✅ Define designs FIRST
+
+
+const [activeTab, setActiveTab] = useState("festival"); // ✅ singular
+const filteredDesigns = designs.filter(d => 
+  d.category && d.category.toLowerCase() === activeTab.toLowerCase()
+);
+
+// Debug logs
+console.log("🔍 designs:", designs);
+console.log("🔍 activeTab:", activeTab);
+console.log("🔍 filteredDesigns:", filteredDesigns);
 
   const buildUrl = (path, month) => {
     return `${path}?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}${month ? `&month=${month}` : ""}`;
@@ -2110,6 +2295,7 @@ export function DesignSelect() {
             color: "#dc2626",
           }}
         >
+
           <Info />
           <div>
             <strong>Error:</strong> {error}
@@ -2135,7 +2321,7 @@ export function DesignSelect() {
     );
   }
 
-  return (
+return (
     <Layout active="Calendar Selection">
       <Crumbs items={["Calendar Selection", "Select Design"]} />
 
@@ -2177,7 +2363,6 @@ export function DesignSelect() {
 
       <div className="notice">
         <Info />
-        
         {loadingExisting ? (
           "Loading saved selection…"
         ) : selectedId ? (
@@ -2205,9 +2390,24 @@ export function DesignSelect() {
         </div>
       )}
 
-      {designs.length === 0 ? (
+      {/* ✅ Tabs - rendered BEFORE the grid */}
+      <div className="designTabs" style={{ display: "flex", gap: "12px", marginBottom: "16px" }}>
+       {["festival", "health", "other"].map(tab => (
+          <Button
+  key={tab}
+  variant={activeTab === tab ? "primary" : "outline"}
+  onClick={() => setActiveTab(tab)}
+  style={{ textTransform: "capitalize" }}
+>
+  {tab === "festival" ? "Festivals" : tab}
+</Button>
+        ))}
+      </div>
+
+      {/* ✅ Design Grid - uses filteredDesigns, not designs */}
+      {filteredDesigns.length === 0 ? (
         <div className="notice">
-          <Info /> No designs for {activeMonth} yet.
+          <Info /> No designs available for this category.
         </div>
       ) : (
         <div
@@ -2218,7 +2418,7 @@ export function DesignSelect() {
             marginTop: 20,
           }}
         >
-          {designs.map((design) => (
+          {filteredDesigns.map((design) => (
             <DesignCard
               key={design.id}
               design={design}
@@ -2288,7 +2488,6 @@ export function DesignSelect() {
         selected={previewDesign && selectedId === previewDesign.id}
       />
 
-      {/* Popup */}
       <Popup
         isOpen={popup.isOpen}
         type={popup.type}
@@ -2434,10 +2633,10 @@ export function CalendarSummary() {
   const [searchParams] = useSearchParams();
   const location = useLocation();
   const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
-  // Add this after your existing state declarations
+
   const [popup, setPopup] = useState({
     isOpen: false,
-    type: "success", // can be "success", "error", or "warning"
+    type: "success",
     title: "",
     message: "",
     onConfirm: null,
@@ -2452,17 +2651,14 @@ export function CalendarSummary() {
   const closePopup = () => {
     setPopup({ ...popup, isOpen: false });
   };
+
   const CURRENT_DOCTOR_ID =
     searchParams.get("doctorId") ||
     location.state?.doctorId ||
     sessionStorage.getItem("currentDoctorId") ||
     localStorage.getItem("currentDoctorId");
 
-  const CURRENT_MR_ID =
-    searchParams.get("mrId") ||
-    location.state?.mrId ||
-    storedUser.mrId ||
-    sessionStorage.getItem("currentMrId");
+const CURRENT_MR_ID = storedUser.mrId; // Always use the logged-in user's mrId string
 
   const [selections, setSelections] = useState([]);
   const [status, setStatus] = useState("in_progress");
@@ -2482,7 +2678,7 @@ export function CalendarSummary() {
     const fetchCalendar = async () => {
       try {
         const response = await fetch(
-          `${API_BASE}/${CURRENT_DOCTOR_ID}?year=${CALENDAR_YEAR}`,
+          `${API_BASE}/${CURRENT_DOCTOR_ID}?year=${CALENDAR_YEAR}`
         );
         const data = await response.json();
 
@@ -2490,11 +2686,12 @@ export function CalendarSummary() {
           setSelections(data.selections || []);
           setStatus(data.status || "in_progress");
 
+          // Fetch doctor details
           const doctorRes = await fetch(
-            `http://localhost:5000/api/doctors/${CURRENT_DOCTOR_ID}`,
+            `http://localhost:5000/api/doctors/${CURRENT_DOCTOR_ID}`
           );
           const doctorData = await doctorRes.json();
-          setDoctorInfo(doctorData);
+          setDoctorInfo(doctorData.doctor);
         }
       } catch (err) {
         console.error("Error:", err);
@@ -2510,9 +2707,7 @@ export function CalendarSummary() {
   const isComplete = completedCount === 12;
   const isFrozen = status === "frozen";
 
-  // Download Clean Calendar PDF - Just image with month and year
-  // Updated downloadCompleteCalendar - Landscape mode
-  // Simplified PDF download - just place the image on landscape page
+  // Download PDF
   const downloadCompleteCalendar = async () => {
     if (selections.length === 0) {
       showPopup("No designs selected yet.");
@@ -2535,11 +2730,10 @@ export function CalendarSummary() {
 
         if (selection) {
           const designAsset = designAssets[month]?.find(
-            (d) => d.id === selection.designId,
+            (d) => d.id === selection.designId
           );
 
           if (designAsset) {
-            // Load the image directly
             const img = new Image();
             img.crossOrigin = "Anonymous";
             img.src = designAsset.file;
@@ -2554,17 +2748,15 @@ export function CalendarSummary() {
 
                 const imgData = canvas.toDataURL("image/png");
 
-                // A4 Landscape: 297mm x 210mm
                 const pdfWidth = 297;
                 const pdfHeight = 210;
 
-                // Calculate image dimensions to fit within page
                 const imgAspectRatio = img.width / img.height;
                 const pageAspectRatio = pdfWidth / pdfHeight;
 
                 let imgWidth, imgHeight;
                 if (imgAspectRatio > pageAspectRatio) {
-                  imgWidth = pdfWidth - 20; // 10mm margins
+                  imgWidth = pdfWidth - 20;
                   imgHeight = imgWidth / imgAspectRatio;
                 } else {
                   imgHeight = pdfHeight - 20;
@@ -2574,24 +2766,14 @@ export function CalendarSummary() {
                 const xOffset = (pdfWidth - imgWidth) / 2;
                 const yOffset = (pdfHeight - imgHeight) / 2;
 
-                if (!isFirstPage) {
-                  pdf.addPage();
-                }
-
-                pdf.addImage(
-                  imgData,
-                  "PNG",
-                  xOffset,
-                  yOffset,
-                  imgWidth,
-                  imgHeight,
-                );
+                if (!isFirstPage) pdf.addPage();
+                pdf.addImage(imgData, "PNG", xOffset, yOffset, imgWidth, imgHeight);
                 isFirstPage = false;
                 resolve();
               };
               img.onerror = () => {
                 console.error("Failed to load image:", designAsset.file);
-                resolve(); // Continue even if image fails
+                resolve();
               };
             });
           }
@@ -2599,7 +2781,7 @@ export function CalendarSummary() {
       }
 
       pdf.save(
-        `Calendar_${doctorInfo?.doctorName?.replace(/\s/g, "_") || "Doctor"}_${CALENDAR_YEAR}.pdf`,
+        `Calendar_${doctorInfo?.doctorName?.replace(/\s/g, "_") || "Doctor"}_${CALENDAR_YEAR}.pdf`
       );
       showPopup("Calendar PDF downloaded successfully!");
     } catch (err) {
@@ -2610,11 +2792,10 @@ export function CalendarSummary() {
     }
   };
 
-  // Also update the handleFreeze function to use the clean calendar
   const handleFreeze = async () => {
     if (!isComplete) {
       showPopup(
-        `Cannot freeze calendar. Only ${completedCount}/12 months have been selected. Please complete all months first.`,
+        `Cannot freeze calendar. Only ${completedCount}/12 months have been selected. Please complete all months first.`
       );
       return;
     }
@@ -2634,10 +2815,9 @@ export function CalendarSummary() {
       const data = await response.json();
 
       if (data.success) {
-        // REMOVED: await downloadCleanCalendarPDF();
-        showPopup(" Calendar frozen successfully!");
+        showPopup("✅ Calendar frozen successfully!");
         navigate(
-          `/calendar-finalized?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`,
+          `/calendar-finalized?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`
         );
       } else {
         throw new Error(data.message);
@@ -2686,17 +2866,37 @@ export function CalendarSummary() {
     <Layout active="Calendar Selection">
       <Crumbs items={["Calendar Selection", "Summary"]} />
 
-      <div
-        style={{ padding: "20px", background: "white", borderRadius: "12px" }}
-      >
-        <div style={{ textAlign: "center", marginBottom: 24 }}>
-          <h1 style={{ fontSize: 28 }}>Calendar Summary</h1>
-          <p>
-            {doctorInfo?.doctorName || "Doctor"} - {CALENDAR_YEAR}
-          </p>
-          {isFrozen && <Badge tone="green">✓ FROZEN</Badge>}
+      {/* ─── Page Head with Doctor Info ─── */}
+      <div className="pageHead">
+        <div>
+          <h1 style={{ fontSize: "24px", fontWeight: "bold", margin: 0 }}>
+            Calendar Summary
+          </h1>
+          {doctorInfo && (
+            <>
+              <p className="subtitle" style={{ margin: "4px 0 0 0", fontSize: "14px", color: "#6b7280" }}>
+                {doctorInfo.doctorName} • {doctorInfo.speciality || "General Physician"}
+              </p>
+              <p style={{ margin: "4px 0 0 0", fontSize: "14px", color: "#6b7280" }}>
+                {doctorInfo.city || ""} {doctorInfo.mclCode ? `• MCL: ${doctorInfo.mclCode}` : ""}
+              </p>
+            </>
+          )}
         </div>
+        <div>
+          {isFrozen && <Badge tone="green" style={{ fontSize: "14px", padding: "6px 12px" }}>✓ FROZEN</Badge>}
+        </div>
+      </div>
 
+      {/* ─── Summary Stats ─── */}
+      <div
+        style={{
+          padding: "20px",
+          background: "white",
+          borderRadius: "12px",
+          marginBottom: "24px",
+        }}
+      >
         <div className="grid cards4" style={{ marginBottom: 24 }}>
           <StatCard
             title="Calendar Year"
@@ -2766,6 +2966,7 @@ export function CalendarSummary() {
         )}
       </div>
 
+      {/* ─── Footer Actions ─── */}
       <div
         className="footerActions"
         style={{
@@ -2779,7 +2980,7 @@ export function CalendarSummary() {
           icon={ArrowLeft}
           onClick={() =>
             navigate(
-              `/calendar-selection?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`,
+              `/calendar-selection?doctorId=${CURRENT_DOCTOR_ID}&mrId=${CURRENT_MR_ID}`
             )
           }
         >
@@ -2849,11 +3050,7 @@ export function CalendarFinalized() {
     sessionStorage.getItem("currentDoctorId") ||
     localStorage.getItem("currentDoctorId");
 
-  const CURRENT_MR_ID =
-    searchParams.get("mrId") ||
-    location.state?.mrId ||
-    storedUser.mrId ||
-    sessionStorage.getItem("currentMrId");
+const CURRENT_MR_ID = storedUser.mrId; // Always use the logged-in user's mrId string
 
   const [record, setRecord] = useState(null);
   const [selections, setSelections] = useState([]);
@@ -2879,7 +3076,7 @@ export function CalendarFinalized() {
             `http://localhost:5000/api/doctors/${CURRENT_DOCTOR_ID}`,
           );
           const doctorData = await doctorRes.json();
-          setDoctorInfo(doctorData);
+          setDoctorInfo(doctorData.doctor); 
         }
       } catch (err) {
         console.error("Error fetching data:", err);

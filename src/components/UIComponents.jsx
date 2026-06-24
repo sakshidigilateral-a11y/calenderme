@@ -2,7 +2,7 @@ import React from "react";
 import { cls } from "../utils/helpers";
 import {
   CheckCircle2, Users, BarChart3, ChevronDown, Search, Filter,
-  Eye, Pencil, MoreVertical, ArrowRight, ArrowLeft,
+  Eye, Pencil, MoreVertical, ArrowRight, ArrowLeft,Trash2
 } from "lucide-react";
 
 // ─── IconBox ────────────────────────────────────────────
@@ -78,20 +78,24 @@ export function Avatar({ name, role }) {
 export function SelectBox({ label = "All", wide = false, value, onChange, options = [] }) {
   if (options && options.length > 0) {
     return (
-      <select 
+      <select
         className={cls("selectbox", wide && "wide")}
         value={value}
         onChange={onChange}
+        style={{ padding: "6px 12px", borderRadius: "6px", border: "1px solid #ddd" }}
       >
+        <option value="">All</option>
         {options.map(opt => (
-          <option key={opt.value} value={opt.value}>{opt.label}</option>
+          <option key={opt.value || opt} value={opt.value || opt}>
+            {opt.label || opt}
+          </option>
         ))}
       </select>
     );
   }
-  
+  // Fallback static display
   return (
-    <div className={cls("selectbox", wide && "wide")}>
+    <div className={cls("selectbox", wide && "wide")} style={{ display: "flex", alignItems: "center", gap: "4px" }}>
       {label}
       <ChevronDown size={16} />
     </div>
@@ -99,11 +103,25 @@ export function SelectBox({ label = "All", wide = false, value, onChange, option
 }
 
 // ─── SearchBox ──────────────────────────────────────────
-export function SearchBox({ placeholder = "Search doctor name, MCL code..." }) {
+// ─── SearchBox ──────────────────────────────────────────
+export function SearchBox({ placeholder = "Search doctor name, MCL code...", value = "", onChange }) {
   return (
-    <div className="search">
+    <div className="search" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
       <Search size={17} />
-      <span>{placeholder}</span>
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        style={{
+          border: "none",
+          background: "transparent",
+          outline: "none",
+          padding: "6px 0",
+          fontSize: "14px",
+          width: "100%",
+        }}
+      />
     </div>
   );
 }
@@ -224,14 +242,45 @@ export function ManagerActivity({ title, status, time }) {
   );
 }
 // ─── Toolbar ────────────────────────────────────────────
-export function Toolbar() {
+export function Toolbar({
+  searchValue = "",
+  onSearchChange,
+  statusValue = "",
+  onStatusChange,
+  specialtyValue = "",
+  onSpecialtyChange,
+  dateValue = "",
+  onDateChange,
+  onClearFilters,
+  statusOptions = ["All Status", "Draft", "Submitted", "Approved", "Pending"],
+  specialtyOptions = ["All Specialties", "Cardiology", "Dermatology", "Paediatrics", "Orthopedics", "General Physician"],
+}) {
   return (
-    <div className="toolbar">
-      <SearchBox placeholder="Search by Doctor Name, Speciality, MCL Code..." />
-      <SelectBox label="All Status" />
-      <SelectBox label="All Specialties" />
-      <SelectBox label="Select Date Range" />
-      <Button variant="outline" icon={Filter}>
+    <div className="toolbar" style={{ display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center", marginBottom: "16px" }}>
+      <SearchBox
+        placeholder="Search by Doctor Name, Speciality, MCL Code..."
+        value={searchValue}
+        onChange={onSearchChange}
+      />
+      <SelectBox
+        label="All Status"
+        value={statusValue}
+        onChange={onStatusChange}
+        options={statusOptions}
+      />
+      <SelectBox
+        label="All Specialties"
+        value={specialtyValue}
+        onChange={onSpecialtyChange}
+        options={specialtyOptions}
+      />
+      <SelectBox
+        label="Select Date Range"
+        value={dateValue}
+        onChange={onDateChange}
+        options={["Today", "Last 7 Days", "This Month"]}
+      />
+      <Button variant="outline" icon={Filter} onClick={onClearFilters}>
         Clear Filters
       </Button>
     </div>
@@ -239,15 +288,18 @@ export function Toolbar() {
 }
 
 // ─── Actions ────────────────────────────────────────────
-export function Actions({ edit, onView, onEdit, onDelete }) {
+// In UIComponents.jsx
+export function Actions({ edit, onView, onEdit, onDelete, showView = true }) {
   return (
     <div className="actions">
-      <Button variant="icon" icon={Eye} onClick={onView} />
+      {showView && <Button variant="icon" icon={Eye} onClick={onView} />}
       {edit && <Button variant="icon" icon={Pencil} onClick={onEdit} />}
-      <Button variant="icon" icon={MoreVertical} onClick={onDelete} />
+      {/* <Button variant="icon" icon={MoreVertical} onClick={onDelete} /> */}
+       <Button variant="icon" icon={Trash2} onClick={onDelete} /> 
     </div>
   );
 }
+
 
 // ─── DataTable ──────────────────────────────────────────
 export function DataTable({ headers, rows }) {

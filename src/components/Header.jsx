@@ -7,6 +7,7 @@ import {
   X,
   User,
   LogOut,
+  ArrowLeft, // ✅ Added
 } from "lucide-react";
 import { Avatar } from "./UIComponents";
 import { useNavigate } from "react-router-dom";
@@ -35,8 +36,13 @@ export default function Header({
     navigate("/");
   };
 
+  const handleGoBack = () => {
+    navigate(-1); // Go back one step
+  };
+
   return (
     <header className="topbar">
+      {/* Menu Toggle */}
       <button
         onClick={onMenuClick}
         style={{
@@ -50,6 +56,23 @@ export default function Header({
         }}
       >
         {isMobile && isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
+
+      {/* ✅ Back Button */}
+      <button
+        onClick={handleGoBack}
+        style={{
+          background: "none",
+          border: "none",
+          cursor: "pointer",
+          padding: "4px",
+          display: "flex",
+          alignItems: "center",
+          color: "#374151",
+        }}
+        aria-label="Go back"
+      >
+        <ArrowLeft size={20} />
       </button>
 
       <div className="spacer" />

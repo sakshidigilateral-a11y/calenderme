@@ -39,7 +39,6 @@ const iconMap = {
   CalendarDays,
 };
 
-// All nav items per role
 const navByRole = {
   mr: [
     ["Dashboard", "LayoutDashboard", "/mr-dashboard"],
@@ -85,6 +84,13 @@ export default function Sidebar({
   const items = navByRole[role];
 
   const isActive = (path) => location.pathname === path;
+
+  // ✅ Merged condition for My Doctors and Calendar Selection
+  const isDoctorOrCalendarPage =
+    isActive("/draft-doctors") ||
+    isActive("/submitted-doctors") ||
+    isActive("/approved-doctors") ||
+    isActive("/calendar-selection");
 
   const isDoctorPage =
     isActive("/draft-doctors") ||
@@ -142,7 +148,7 @@ export default function Sidebar({
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "#ffffff",  // ← WHITE BACKGROUND
+        backgroundColor: "#ffffff",
         color: "#1a1a2e",
         boxShadow: "2px 0 10px rgba(0,0,0,0.08)",
       }}
@@ -169,7 +175,6 @@ export default function Sidebar({
             </span>
           </div>
         )}
-        {/* Toggle button */}
         <button
           onClick={toggleSidebar}
           style={{
@@ -195,7 +200,7 @@ export default function Sidebar({
             return (
               <React.Fragment key={title}>
                 <div
-                  className={cls("navitem", isDoctorPage && "active")}
+                  className={cls("navitem", isDoctorOrCalendarPage && "active")}
                   onClick={() => {
                     if (isOpen) {
                       setDoctorMenuOpen(!doctorMenuOpen);
@@ -212,17 +217,17 @@ export default function Sidebar({
                     borderRadius: "8px",
                     cursor: "pointer",
                     transition: "all 0.2s",
-                    backgroundColor: isDoctorPage ? "#eff6ff" : "transparent",
-                    color: isDoctorPage ? "#0b55f4" : "#4b5563",
+                    backgroundColor: isDoctorOrCalendarPage ? "#eff6ff" : "transparent",
+                    color: isDoctorOrCalendarPage ? "#0b55f4" : "#4b5563",
                     justifyContent: isOpen ? "flex-start" : "center",
                   }}
                   onMouseEnter={(e) => {
-                    if (!isDoctorPage) {
+                    if (!isDoctorOrCalendarPage) {
                       e.currentTarget.style.backgroundColor = "#f3f4f6";
                     }
                   }}
                   onMouseLeave={(e) => {
-                    if (!isDoctorPage) {
+                    if (!isDoctorOrCalendarPage) {
                       e.currentTarget.style.backgroundColor = "transparent";
                     }
                   }}
@@ -284,6 +289,44 @@ export default function Sidebar({
                   </div>
                 )}
               </React.Fragment>
+            );
+          }
+
+          // Calendar Selection – use merged condition
+          if (title === "Calendar Selection") {
+            return (
+              <div
+                key={title}
+                className={cls("navitem", isDoctorOrCalendarPage && "active")}
+                onClick={() => handleNavigation(path)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: isOpen ? "12px" : "0",
+                  padding: isOpen ? "10px 14px" : "10px 12px",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  transition: "all 0.2s",
+                  backgroundColor: isDoctorOrCalendarPage ? "#eff6ff" : "transparent",
+                  color: isDoctorOrCalendarPage ? "#0b55f4" : "#4b5563",
+                  justifyContent: isOpen ? "flex-start" : "center",
+                }}
+                onMouseEnter={(e) => {
+                  if (!isDoctorOrCalendarPage) {
+                    e.currentTarget.style.backgroundColor = "#f3f4f6";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isDoctorOrCalendarPage) {
+                    e.currentTarget.style.backgroundColor = "transparent";
+                  }
+                }}
+              >
+                <Icon size={21} style={{ flexShrink: 0 }} />
+                {isOpen && (
+                  <span style={{ fontSize: "14px", fontWeight: "500" }}>{title}</span>
+                )}
+              </div>
             );
           }
 
