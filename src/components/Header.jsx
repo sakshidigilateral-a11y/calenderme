@@ -7,7 +7,7 @@ import {
   X,
   User,
   LogOut,
-  ArrowLeft, // ✅ Added
+  ArrowLeft,
 } from "lucide-react";
 import { Avatar } from "./UIComponents";
 import { useNavigate } from "react-router-dom";
@@ -37,28 +37,40 @@ export default function Header({
   };
 
   const handleGoBack = () => {
-    navigate(-1); // Go back one step
+    navigate(-1);
   };
 
   return (
-    <header className="topbar">
-      {/* Menu Toggle */}
-      <button
-        onClick={onMenuClick}
-        style={{
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          padding: "4px",
-          display: "flex",
-          alignItems: "center",
-          color: "#374151",
-        }}
-      >
-        {isMobile && isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
-      </button>
+    <header
+      className="topbar"
+      style={{
+        height: isMobile ? "60px" : undefined,
+        padding: isMobile ? "0 12px" : undefined,
+        gap: isMobile ? "10px" : undefined,
+        flexWrap: isMobile ? "nowrap" : undefined,
+      }}
+    >
+      {/* Hamburger / close menu — mobile only, this is what opens & closes the sidebar drawer */}
+      {isMobile && (
+        <button
+          onClick={onMenuClick}
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            padding: "4px",
+            display: "flex",
+            alignItems: "center",
+            color: "#374151",
+            flexShrink: 0,
+          }}
+          aria-label={isSidebarOpen ? "Close menu" : "Open menu"}
+        >
+          {isSidebarOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
+      )}
 
-      {/* ✅ Back Button */}
+      {/* Back Button */}
       <button
         onClick={handleGoBack}
         style={{
@@ -69,6 +81,7 @@ export default function Header({
           display: "flex",
           alignItems: "center",
           color: "#374151",
+          flexShrink: 0,
         }}
         aria-label="Go back"
       >
@@ -77,13 +90,15 @@ export default function Header({
 
       <div className="spacer" />
 
-      <div className="location">
-        <MapPin size={18} />
-        {loc}
-      </div>
+      {!isMobile && (
+        <div className="location">
+          <MapPin size={18} />
+          {loc}
+        </div>
+      )}
 
-      <div className="bell">
-        <Bell />
+      <div className="bell" style={{ flexShrink: 0 }}>
+        <Bell size={isMobile ? 20 : 24} />
         <span>
           {role === "ho" ? 18 : role === "manager" ? 12 : 8}
         </span>
@@ -97,24 +112,25 @@ export default function Header({
           alignItems: "center", 
           gap: "8px",
           position: "relative",
+          flexShrink: 0,
         }}
       >
         <Avatar name={name} role={designation} />
-        <ChevronDown size={18} />
+        {!isMobile && <ChevronDown size={18} />}
       </div>
 
       {isProfileOpen && (
         <div
           style={{
             position: "absolute",
-            top: "60px",
-            right: "20px",
+            top: isMobile ? "56px" : "60px",
+            right: isMobile ? "12px" : "20px",
             background: "white",
             borderRadius: "8px",
             boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
             padding: "8px",
             minWidth: "180px",
-            zIndex: 200,
+            zIndex: 1100,
           }}
         >
           <div

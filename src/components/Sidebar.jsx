@@ -22,7 +22,7 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import { cls } from "../utils/helpers";
 import { getPendingActionsCount } from "../api/managerAPI";
-
+import calendarmeLogo from "../assets/calendarme-logo.png"
 const iconMap = {
   LayoutDashboard,
   UserPlus,
@@ -76,6 +76,16 @@ export default function Sidebar({
   toggleSidebar,
   isMobile = false,
 }) {
+   const user = JSON.parse(localStorage.getItem("user") || "{}");
+ 
+
+  // ✅ Override: if mrId exists, they are MR
+  if (user.mrId) {
+    role = "mr";
+  } else if (["flm", "slm", "tlm"].includes(role)) {
+    role = "manager";
+  }
+
   const navigate = useNavigate();
   const location = useLocation();
   const [doctorMenuOpen, setDoctorMenuOpen] = useState(false);
@@ -154,7 +164,7 @@ export default function Sidebar({
       }}
     >
       {/* Brand */}
-      <div 
+     <div 
         className="brand"
         style={{
           padding: isOpen ? "20px 16px" : "20px 8px",
@@ -166,28 +176,41 @@ export default function Sidebar({
           minHeight: "70px",
         }}
       >
-        <CalendarDays size={34} color="#0b55f4" />
+        {/* Icon – visible in both states */}
+       {isOpen ? (
+    <img 
+      src={calendarmeLogo} 
+      alt="Calendarme" 
+      style={{ height: "60px", width: "auto", objectFit: "contain" , }}
+    />
+  ) : (
+    <CalendarDays size={34} color="#0b55f4" />
+  )}
+        
+        {/* ✅ Optional: keep "Personalized" text (if you want) */}
         {isOpen && (
-          <div>
-            <b style={{ color: "#1a1a2e" }}>Personalized</b>
-            <span style={{ color: "#6b7280" }}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {/* <b style={{ color: "#1a1a2e", fontSize: "14px" }}>Personalized</b> */}
+            {/* <span style={{ color: "#6b7280", fontSize: "12px" }}>
               {role === "ho" ? "HO Admin Portal" : "Calendar Campaign Portal"}
-            </span>
+            </span> */}
           </div>
         )}
+
+        {/* Toggle button */}
         <button
-          onClick={toggleSidebar}
-          style={{
-            background: "none",
-            border: "none",
-            color: "#6b7280",
-            cursor: "pointer",
-            padding: "4px",
-            marginLeft: isOpen ? "auto" : "0",
-          }}
-        >
-          {isOpen ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
-        </button>
+    onClick={toggleSidebar}
+    style={{
+      background: "none",
+      border: "none",
+      color: "#6b7280",
+      cursor: "pointer",
+      padding: "4px",
+      marginLeft: isOpen ? "0" : "0",
+    }}
+  >
+    {isOpen ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
+  </button>
       </div>
 
       {/* Navigation */}

@@ -30,6 +30,7 @@ import api from "../api/axios";
 import { downloadCalendarPDF } from "../utils/calendarPdf";
 import CalendarMonthGrid from "../components/CalendarMonthGrid";
 import jsPDF from "jspdf";
+import { deleteDoctorPhoto } from "../api/doctorAPI";
 
 // ─── Popup Component ────────────────────────────────────
 function Popup({ isOpen, type, title, message, onClose }) {
@@ -365,6 +366,7 @@ export default function DoctorDetail({ consentModal = false }) {
     title: "",
     message: "",
   });
+  console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", doctor)
   const [calendarData, setCalendarData] = useState(null);
   const [calendarLoading, setCalendarLoading] = useState(false);
 
@@ -431,6 +433,25 @@ export default function DoctorDetail({ consentModal = false }) {
     }
   };
 
+  const handleDeletePhoto = async (photoId, index) => {
+    if (!window.confirm("Are you sure you want to delete this photo?")) return;
+
+    try {
+      await deleteDoctorPhoto(doctorId, photoId);
+      // Update local state
+      const updatedPhotos = doctor.doctorPhotos.filter((_, i) => i !== index);
+      setDoctor({
+        ...doctor,
+        doctorPhotos: updatedPhotos,
+        photoUploaded: updatedPhotos.length > 0,
+      });
+      showPopup("success", "Photo Deleted", "Photo removed successfully.");
+    } catch (error) {
+      console.error("Delete error:", error);
+      showPopup("error", "Delete Failed", "Could not delete photo.");
+    }
+  };
+
   const handleDownloadPhotosZip = async () => {
     if (!doctor?.doctorPhotos?.length) {
       showPopup("error", "No Photos", "No photos to download.");
@@ -438,16 +459,23 @@ export default function DoctorDetail({ consentModal = false }) {
     }
     try {
       const zip = new JSZip();
-      const folder = zip.folder(`${doctor.doctorName.replace(/\s/g, "_")}_photos`);
+      const folder = zip.folder(
+        `${doctor.doctorName.replace(/\s/g, "_")}_photos`,
+      );
       const downloadPromises = doctor.doctorPhotos.map(async (photo, index) => {
-        const response = await fetch(`http://localhost:5000${photo.url}`);
+        const response = await fetch(
+          `https://calendarme.digilateral.com${photo.url}`,
+        );
         const blob = await response.blob();
-        const ext = photo.url.split('.').pop() || 'jpg';
+        const ext = photo.url.split(".").pop() || "jpg";
         folder.file(`photo_${index + 1}.${ext}`, blob);
       });
       await Promise.all(downloadPromises);
       const zipBlob = await zip.generateAsync({ type: "blob" });
-      saveAs(zipBlob, `Doctor_${doctor.doctorName.replace(/\s/g, "_")}_Photos.zip`);
+      saveAs(
+        zipBlob,
+        `Doctor_${doctor.doctorName.replace(/\s/g, "_")}_Photos.zip`,
+      );
       showPopup("success", "Download Complete", "Photos downloaded as ZIP.");
     } catch (error) {
       console.error("Download error:", error);
@@ -457,12 +485,24 @@ export default function DoctorDetail({ consentModal = false }) {
 
   const handleDownloadCalendarPDF = async () => {
     if (!calendarData?.selections?.length) {
-      showPopup("error", "No Calendar", "This doctor has no calendar selections.");
+      showPopup(
+        "error",
+        "No Calendar",
+        "This doctor has no calendar selections.",
+      );
       return;
     }
     try {
-      await downloadCalendarPDF(doctorId, doctor.doctorName, calendarData.selections);
-      showPopup("success", "Download Started", "Calendar PDF is being generated.");
+      await downloadCalendarPDF(
+        doctorId,
+        doctor.doctorName,
+        calendarData.selections,
+      );
+      showPopup(
+        "success",
+        "Download Started",
+        "Calendar PDF is being generated.",
+      );
     } catch (error) {
       showPopup("error", "Download Failed", error.message);
     }
@@ -472,7 +512,11 @@ export default function DoctorDetail({ consentModal = false }) {
 
   const handleDownloadProfile = async () => {
     if (!doctor) return;
-    showPopup("success", "Generating PDF...", "Please wait while we prepare your download.");
+    showPopup(
+      "success",
+      "Generating PDF...",
+      "Please wait while we prepare your download.",
+    );
 
     try {
       const doc = new jsPDF();
@@ -540,7 +584,7 @@ export default function DoctorDetail({ consentModal = false }) {
 
         const imagePromises = doctor.doctorPhotos.map((photo, index) => {
           return new Promise((resolve) => {
-            const imgUrl = `http://localhost:5000${photo.url}`;
+            const imgUrl = `https://calendarme.digilateral.com${photo.url}`;
             fetch(imgUrl)
               .then((res) => {
                 if (!res.ok) throw new Error("Failed to load");
@@ -602,11 +646,19 @@ export default function DoctorDetail({ consentModal = false }) {
       doc.save(`Doctor_${doctor.doctorName.replace(/\s/g, "_")}_Profile.pdf`);
 
       closePopup();
-      showPopup("success", "Download Complete!", "Profile PDF downloaded successfully.");
+      showPopup(
+        "success",
+        "Download Complete!",
+        "Profile PDF downloaded successfully.",
+      );
     } catch (error) {
       console.error("PDF generation error:", error);
       closePopup();
-      showPopup("error", "Download Failed", "Could not generate PDF. Please try again.");
+      showPopup(
+        "error",
+        "Download Failed",
+        "Could not generate PDF. Please try again.",
+      );
     }
   };
 
@@ -623,7 +675,10 @@ export default function DoctorDetail({ consentModal = false }) {
               {doctor.approvalStatus || "Pending"}
             </Badge>
           </h1>
-          <p className="subtitle" style={{ margin: "4px 0 0 0", color: "#6b7280" }}>
+          <p
+            className="subtitle"
+            style={{ margin: "4px 0 0 0", color: "#6b7280" }}
+          >
             {doctor.speciality} • {doctor.mclCode}
           </p>
         </div>
@@ -631,7 +686,11 @@ export default function DoctorDetail({ consentModal = false }) {
           <Button variant="outline" icon={Pencil} onClick={handleEditDoctor}>
             Edit Doctor
           </Button>
-          <Button variant="outline" icon={Download} onClick={handleDownloadProfile}>
+          <Button
+            variant="outline"
+            icon={Download}
+            onClick={handleDownloadProfile}
+          >
             Download Profile
           </Button>
         </div>
@@ -665,7 +724,8 @@ export default function DoctorDetail({ consentModal = false }) {
                 fontWeight: activeTab === "overview" ? "bold" : "normal",
                 color: activeTab === "overview" ? "#0b55f4" : "#6b7280",
                 paddingBottom: 4,
-                borderBottom: activeTab === "overview" ? "2px solid #0b55f4" : "none",
+                borderBottom:
+                  activeTab === "overview" ? "2px solid #0b55f4" : "none",
               }}
             >
               Overview
@@ -678,7 +738,8 @@ export default function DoctorDetail({ consentModal = false }) {
                 fontWeight: activeTab === "calendar" ? "bold" : "normal",
                 color: activeTab === "calendar" ? "#0b55f4" : "#6b7280",
                 paddingBottom: 4,
-                borderBottom: activeTab === "calendar" ? "2px solid #0b55f4" : "none",
+                borderBottom:
+                  activeTab === "calendar" ? "2px solid #0b55f4" : "none",
               }}
             >
               Calendar & Photo
@@ -792,7 +853,10 @@ export default function DoctorDetail({ consentModal = false }) {
                         background: "#f9fafb",
                       }}
                     >
-                      <Upload size={28} style={{ display: "block", margin: "0 auto 8px" }} />
+                      <Upload
+                        size={28}
+                        style={{ display: "block", margin: "0 auto 8px" }}
+                      />
                       <span>
                         {isPhotoLimitReached
                           ? "Photo Limit Reached (5/5)"
@@ -815,7 +879,9 @@ export default function DoctorDetail({ consentModal = false }) {
                     <span style={{ color: "#6b7280" }}>
                       Photos can be uploaded only after approval
                     </span>
-                    <div style={{ fontSize: 12, color: "#9ca3af", marginTop: 4 }}>
+                    <div
+                      style={{ fontSize: 12, color: "#9ca3af", marginTop: 4 }}
+                    >
                       Current status: {doctor.approvalStatus || "Pending"}
                     </div>
                   </div>
@@ -831,7 +897,13 @@ export default function DoctorDetail({ consentModal = false }) {
                         marginTop: 12,
                       }}
                     >
-                      <h4 style={{ fontSize: 14, fontWeight: 600, color: "#374151" }}>
+                      <h4
+                        style={{
+                          fontSize: 14,
+                          fontWeight: 600,
+                          color: "#374151",
+                        }}
+                      >
                         Uploaded Photos ({doctor.doctorPhotos.length}/5)
                       </h4>
                       <Button
@@ -846,7 +918,8 @@ export default function DoctorDetail({ consentModal = false }) {
                     <div
                       style={{
                         display: "grid",
-                        gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
+                        gridTemplateColumns:
+                          "repeat(auto-fill, minmax(100px, 1fr))",
                         gap: 12,
                         marginTop: 8,
                       }}
@@ -863,11 +936,14 @@ export default function DoctorDetail({ consentModal = false }) {
                             background: "white",
                           }}
                           onClick={() =>
-                            window.open(`http://localhost:5000${photo.url}`, "_blank")
+                            window.open(
+                              `https://calendarme.digilateral.com${photo.url}`,
+                              "_blank",
+                            )
                           }
                         >
                           <img
-                            src={`http://localhost:5000${photo.url}`}
+                            src={`https://calendarme.digilateral.com${photo.url}`}
                             alt={`Photo ${idx + 1}`}
                             style={{
                               width: "100%",
@@ -880,6 +956,42 @@ export default function DoctorDetail({ consentModal = false }) {
                                 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="%23999" stroke-width="2"%3E%3Crect x="2" y="2" width="20" height="20" rx="2.18"/%3E%3Ccircle cx="8.5" cy="8.5" r="2.5"/%3E%3Cpath d="M21 15l-5-5-6 6-3-3-4 4"/%3E%3C/svg%3E';
                             }}
                           />
+
+                          {/* 🗑️ Delete Button */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation(); // prevent opening image
+                              handleDeletePhoto(photo._id, idx);
+                            }}
+                            style={{
+                              position: "absolute",
+                              top: "6px",
+                              right: "6px",
+                              background: "rgba(0,0,0,0.7)",
+                              border: "none",
+                              borderRadius: "50%",
+                              width: "28px",
+                              height: "28px",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              color: "#fff",
+                              cursor: "pointer",
+                              transition: "0.2s",
+                              zIndex: 2,
+                            }}
+                            onMouseEnter={(e) =>
+                              (e.currentTarget.style.background =
+                                "rgba(220,0,0,0.9)")
+                            }
+                            onMouseLeave={(e) =>
+                              (e.currentTarget.style.background =
+                                "rgba(0,0,0,0.7)")
+                            }
+                          >
+                            <X size={16} />
+                          </button>
+
                           <div
                             style={{
                               position: "absolute",

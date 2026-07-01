@@ -201,9 +201,9 @@ export default function SubmittedDoctors() {
             Below are the doctors you've submitted for approval.
           </p>
         </div>
-        <Button variant="outline" icon={Download}>
+        {/* <Button variant="outline" icon={Download}>
           Export
-        </Button>
+        </Button> */}
       </div>
 
       <div className="grid cards4">
@@ -263,7 +263,7 @@ export default function SubmittedDoctors() {
               "Brand",
               "Current Business",
               "Expected Business",
-              "Brand Focus",
+              "Brand Focus",           
               "Other Activities",
               "Submitted On",
               "Modified Date",

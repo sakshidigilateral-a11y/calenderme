@@ -189,7 +189,8 @@ import CalendarDesigns from "./pages/CalendarDesigns";
 // HO Pages
 import HODashboard from "./pages/HODashboard";
 import HOReport from "./pages/HOReport";
-
+import AllDoctors from "./pages/Alldoctors ";
+import FrozenDoctors from "./pages/Frozendoctors";
 
 
 
@@ -211,7 +212,8 @@ function App() {
        <Route path="/manager/mr-progress" element={<MRProgress />} />
 <Route path="/manager/delay-report" element={<DelayReport />} />
 <Route path="/profile-edit" element={<ProfileEdit />} />
-
+<Route path="/all-doctors" element={<AllDoctors />} />
+<Route path="/frozen-doctors" element={<FrozenDoctors />} />
         {/* <Route path="/doctor-detail" element={<DoctorDetail />} /> */}
         <Route path="/doctor-details/:doctorId" element={<DoctorDetail />} />
         <Route

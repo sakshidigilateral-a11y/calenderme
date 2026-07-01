@@ -184,7 +184,7 @@ import jsPDF from "jspdf";
 import CalendarMonthGrid from "../components/CalendarMonthGrid";
 import { designAssets } from "../utils/designAssets";
 const CALENDAR_YEAR = 2027;
-const API_BASE = "http://localhost:5000/api/calendar";
+const API_BASE = "https://calendarme.digilateral.com/api/calendar";
 
 // ─── Popup Component ────────────────────────────────────
 // ─── Popup Component ────────────────────────────────────
@@ -774,6 +774,7 @@ function DesignCard({ design, selected, onSelect, onPreview }) {
         <button
           onClick={(e) => {
             e.stopPropagation();
+             console.log("🔵 Preview button clicked for:", design.label);
             onPreview(design);
           }}
           style={{
@@ -1866,6 +1867,7 @@ const CURRENT_MR_ID = storedUser.mrId; // Always use the logged-in user's mrId s
 
   // Preview handlers (keep if needed)
   const handlePreview = (design, month) => {
+    console.log("Preview clicked for:", design.label);
     setPreviewDesign(design);
     setPreviewMonth(month);
   };
@@ -2068,7 +2070,7 @@ console.log("🔍 filteredDesigns:", filteredDesigns);
   // Fetch doctor name
   useEffect(() => {
     if (CURRENT_DOCTOR_ID) {
-      fetch(`http://localhost:5000/api/doctors/${CURRENT_DOCTOR_ID}`)
+      fetch(`https://calendarme.digilateral.com/api/doctors/${CURRENT_DOCTOR_ID}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.doctorName) setDoctorName(data.doctorName);
@@ -2688,7 +2690,7 @@ const CURRENT_MR_ID = storedUser.mrId; // Always use the logged-in user's mrId s
 
           // Fetch doctor details
           const doctorRes = await fetch(
-            `http://localhost:5000/api/doctors/${CURRENT_DOCTOR_ID}`
+            `https://calendarme.digilateral.com/api/doctors/${CURRENT_DOCTOR_ID}`
           );
           const doctorData = await doctorRes.json();
           setDoctorInfo(doctorData.doctor);
@@ -3073,7 +3075,7 @@ const CURRENT_MR_ID = storedUser.mrId; // Always use the logged-in user's mrId s
 
           // Fetch doctor details
           const doctorRes = await fetch(
-            `http://localhost:5000/api/doctors/${CURRENT_DOCTOR_ID}`,
+            `https://calendarme.digilateral.com/api/doctors/${CURRENT_DOCTOR_ID}`,
           );
           const doctorData = await doctorRes.json();
           setDoctorInfo(doctorData.doctor); 

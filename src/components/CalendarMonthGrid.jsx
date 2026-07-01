@@ -1,4 +1,3 @@
-// src/components/CalendarMonthGrid.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -15,13 +14,14 @@ import { cls, months } from "../utils/helpers";
 import { designAssets } from "../utils/designAssets";
 
 const CALENDAR_YEAR = 2027;
-const API_BASE = "http://localhost:5000/api/calendar";
+const API_BASE = "https://calendarme.digilateral.com/api/calendar";
 
 export default function CalendarMonthGrid({ doctorId, mrId, isFrozen = false }) {
   const navigate = useNavigate();
   const [dbSelections, setDbSelections] = useState({});
   const [calendarStatus, setCalendarStatus] = useState("in_progress");
   const [loading, setLoading] = useState(true);
+  const [previewDesign, setPreviewDesign] = useState(null); // State for preview modal
 
   useEffect(() => {
     if (!doctorId) return;
@@ -41,12 +41,8 @@ export default function CalendarMonthGrid({ doctorId, mrId, isFrozen = false }) 
       .finally(() => setLoading(false));
   }, [doctorId]);
 
-  // Go to design page for a month (only if not frozen)
   const goToDesign = (month) => {
-    if (isFrozen || calendarStatus === "frozen") {
-      // show a popup or just do nothing
-      return;
-    }
+    if (isFrozen || calendarStatus === "frozen") return;
     navigate(`/calendar-design?month=${month}&doctorId=${doctorId}&mrId=${mrId}`);
   };
 
@@ -192,9 +188,7 @@ export default function CalendarMonthGrid({ doctorId, mrId, isFrozen = false }) 
                   <Button
                     variant="outline"
                     icon={Eye}
-                    onClick={() => {
-                      // Preview modal can be added here if needed
-                    }}
+                    onClick={() => setPreviewDesign(selectedDesign)} // ✅ Opens modal
                     style={{ flex: 1, justifyContent: "center", fontSize: "12px", padding: "6px 12px" }}
                   >
                     Preview
@@ -273,6 +267,51 @@ export default function CalendarMonthGrid({ doctorId, mrId, isFrozen = false }) 
           >
             View Summary
           </Button>
+        </div>
+      )}
+
+      {/* ✅ Preview Modal */}
+      {previewDesign && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 1000,
+            background: "rgba(0,0,0,0.75)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 24,
+          }}
+          onClick={() => setPreviewDesign(null)}
+        >
+          <div
+            style={{
+              background: "#fff",
+              borderRadius: 16,
+              maxWidth: 700,
+              width: "100%",
+              overflow: "hidden",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ padding: "12px 16px", textAlign: "right" }}>
+              <button
+                onClick={() => setPreviewDesign(null)}
+                style={{ background: "none", border: "none", fontSize: 20, cursor: "pointer" }}
+              >
+                ✕
+              </button>
+            </div>
+            <img
+              src={previewDesign.file}
+              alt={previewDesign.label}
+              style={{ width: "100%", maxHeight: "65vh", objectFit: "contain" }}
+            />
+            <div style={{ padding: "12px", textAlign: "center", fontWeight: 600 }}>
+              {previewDesign.label}
+            </div>
+          </div>
         </div>
       )}
     </div>

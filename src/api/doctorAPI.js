@@ -50,3 +50,18 @@ export const deleteDoctor = async (doctorId) => {
   const response = await api.delete(`/doctors/${doctorId}`);
   return response.data;
 };
+
+export const getAllDoctors = async (mrId) => {
+  const response = await api.get(`/doctors/${mrId}`);
+  return response.data;
+};
+
+export const getFrozenDoctors = async (mrId) => {
+  const response = await api.get(`/doctors/by-mr/${mrId}`);
+  return response.data;
+};
+
+export const deleteDoctorPhoto = async (doctorId, photoId) => {
+  const response = await axios.delete(`https://calendarme.digilateral.com/api/doctors/${doctorId}/photos/${photoId}`);
+  return response.data;
+};

@@ -83,7 +83,7 @@ export default function EditDoctor() {
       const user = JSON.parse(localStorage.getItem("user"));
       
       await axios.put(
-        `http://localhost:5000/api/doctors/${doctorId}`,
+        `https://calendarme.digilateral.com/api/doctors/${doctorId}`,
         {
           ...formData,
           mrId: user.mrId,

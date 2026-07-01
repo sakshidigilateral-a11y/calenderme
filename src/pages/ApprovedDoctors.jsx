@@ -235,7 +235,7 @@ export default function ApprovedDoctors() {
       const folder = zip.folder(`${doctorName.replace(/\s/g, "_")}_photos`);
 
       const downloadPromises = photos.map(async (photo, index) => {
-        const response = await fetch(`http://localhost:5000${photo.url}`);
+        const response = await fetch(`https://calendarme.digilateral.com${photo.url}`);
         const blob = await response.blob();
         const ext = photo.url.split(".").pop() || "jpg";
         folder.file(`photo_${index + 1}.${ext}`, blob);
@@ -292,9 +292,9 @@ export default function ApprovedDoctors() {
             Below are the doctors approved by Manager / FLM.
           </p>
         </div>
-        <Button variant="outline" icon={Download}>
+        {/* <Button variant="outline" icon={Download}>
           Export
-        </Button>
+        </Button> */}
       </div>
 
       <div className="grid cards4">
@@ -337,7 +337,7 @@ export default function ApprovedDoctors() {
         statusOptions={["Sent", "Not Sent", "Consent Given", "Consent Pending"]}
         specialtyOptions={["Cardiology", "Dermatology", "Paediatrics", "Orthopedics", "General Physician"]}
       />
-
+<div style={{ overflowX: 'auto', width: '100%' }}>
       <DataTable
         headers={[
           "Doctor Name",
@@ -384,7 +384,7 @@ export default function ApprovedDoctors() {
                 textDecoration: "underline",
               }}
             >
-              Uploaded ({doctor.doctorPhotos?.length || 0})
+               ({doctor.doctorPhotos?.length || 0})
             </span>
           ) : (
             <Badge tone="orange">Pending</Badge>
@@ -438,11 +438,23 @@ export default function ApprovedDoctors() {
           </div>,
         ])}
       />
+      </div>
 
       <style>{`
         .doctor-name-link:hover {
           text-decoration: underline;
         }
+
+        @media (max-width: 768px) {
+  .tableBox {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tableBox table {
+    min-width: 700px;
+    width: 100%;
+  }
+}
         
         .action-icons {
           display: flex;

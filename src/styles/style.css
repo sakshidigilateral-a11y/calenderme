@@ -1522,3 +1522,72 @@ button:active,
   color: #2563eb;
   font-weight: 600;
 }
+
+@media (max-width: 768px) {
+  /* --- Force ListLine to show the number on the right --- */
+  .listline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+    padding: 8px 0;
+  }
+  .listline > div:first-child { flex-shrink: 0; }          /* icon */
+  .listline > div:nth-child(2) { 
+    flex: 1 1 100%; 
+    order: 1; 
+  }                                                         /* title + sub */
+  .listline > strong { 
+    order: 2; 
+    margin-left: auto; 
+    font-size: 16px; 
+    min-width: 24px; 
+  }                                                         /* number */
+  .listline > svg:last-child { 
+    order: 3; 
+    flex-shrink: 0; 
+  }                                                         /* arrow */
+
+  /* --- Panel header: View All always visible --- */
+  .panelHead {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .panelHead h3 { flex: 1 1 auto; font-size: 15px; }
+  .panelHead button {
+    margin-left: auto;
+    min-height: 44px;
+    padding: 6px 14px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  /* --- Scrollable frozen calendars --- */
+  .scroll-x {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 8px;
+    padding: 8px 4px 12px;
+    width: 100%;
+  }
+  .scroll-x > * {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    min-width: 140px;
+  }
+
+  .scroll-x {
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  gap: 12px;
+  padding: 4px 0;
+}
+.scroll-x > * {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+}

@@ -21,7 +21,7 @@ export default function LoginPage({ forgot = false }) {
 const handleLogin = async () => {
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/auth/login",
+      "https://calendarme.digilateral.com/api/auth/login",
       {
         userId,
         password,

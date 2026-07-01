@@ -4,7 +4,7 @@ import { CalendarDays, CheckCircle2, Clock3, Box, Info, ArrowLeft, Download, X, 
 import Layout from "../components/Layout";
 import { StatCard, Badge, Button, DataTable, Crumbs, SuccessBlock } from "../components/UIComponents";
 
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = "https://calendarme.digilateral.com/api";
 
 export default function InputGiven({ modal = false, success = false }) {
   const navigate = useNavigate();
@@ -393,6 +393,17 @@ export default function InputGiven({ modal = false, success = false }) {
           from { opacity: 0; transform: scale(0.9) translateY(-20px); }
           to { opacity: 1; transform: scale(1) translateY(0); }
         }
+
+        @media (max-width: 768px) {
+  .tableBox {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tableBox table {
+    min-width: 700px;
+    width: 100%;
+  }
+}
       `}</style>
     </Layout>
   );

@@ -34,18 +34,40 @@ export function Button({ children, variant = "primary", icon: Icon, onClick, cla
 }
 
 // ─── StatCard ───────────────────────────────────────────
-export function StatCard({ title, value, sub, icon, tone = "blue", onClick }) {
+// ─── StatCard ───────────────────────────────────────────
+export function StatCard({
+  title,
+  value,
+  sub,
+  icon: Icon,
+  tone = "blue",
+  onClick,
+}) {
   return (
-    <div 
-      className={`stat ${tone}`} 
-      onClick={onClick} 
-      style={{ cursor: onClick ? 'pointer' : 'default' }}
+    <div
+      onClick={onClick}
+      className={`stat ${tone} flex items-center gap-3 rounded-xl bg-white p-3 sm:p-4 lg:p-5 shadow-sm transition hover:shadow-md ${
+        onClick ? "cursor-pointer" : "cursor-default"
+      }`}
     >
-      <IconBox icon={icon} tone={tone} />
-      <div>
-        <p>{title}</p>
-        <h3>{value}</h3>
-        {sub && <small>{sub}</small>}
+      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 sm:h-12 sm:w-12">
+        <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+      </div>
+
+      <div className="min-w-0 flex-1">
+        <p className="text-lg sm:text-2xl lg:text-3xl font-bold wrap-break-word">
+          {title}
+        </p>
+
+        <h3 className="text-lg font-bold text-gray-900 sm:text-2xl lg:text-3xl">
+          {value}
+        </h3>
+
+        {sub && (
+          <small className="hidden text-[10px] text-gray-500 sm:block sm:text-xs">
+            {sub}
+          </small>
+        )}
       </div>
     </div>
   );
@@ -125,11 +147,10 @@ export function SearchBox({ placeholder = "Search doctor name, MCL code...", val
     </div>
   );
 }
-
 // ─── Panel ──────────────────────────────────────────────
-export function Panel({ title, children, action, onActionClick }) {
+export function Panel({ title, children, action, onActionClick, style }) {
   return (
-    <div className="panel">
+    <div className="panel" style={style}>
       <div className="panelHead">
         <h3>{title}</h3>
         {action && (
@@ -144,12 +165,12 @@ export function Panel({ title, children, action, onActionClick }) {
 }
 
 // ─── ListLine ───────────────────────────────────────────
-export function ListLine({ icon: Icon, title, sub, value, onClick, clickable = true }) {
+export function ListLine({ icon: Icon, title, sub, value, onClick, clickable = true, style }) {
   return (
     <div 
       className="listline" 
       onClick={onClick}
-      style={{ cursor: clickable && onClick ? 'pointer' : 'default' }}
+      style={{ cursor: clickable && onClick ? 'pointer' : 'default', ...style }}
     >
       <IconBox icon={Icon} tone="orange" />
       <div>
@@ -163,7 +184,7 @@ export function ListLine({ icon: Icon, title, sub, value, onClick, clickable = t
 }
 
 // ─── DoctorActivity ─────────────────────────────────────
-export function DoctorActivity({ doctor }) {
+export function DoctorActivity({ doctor, style }) {
   let status = "";
   let statusTone = "orange";
 
@@ -185,7 +206,7 @@ export function DoctorActivity({ doctor }) {
   }
 
   return (
-    <div className="doctorAct">
+    <div className="doctorAct" style={style}>
       <div className="miniAvatar">
         {doctor.doctorName?.split(" ")?.map((n) => n[0])?.slice(0, 2)?.join("") || "D"}
       </div>

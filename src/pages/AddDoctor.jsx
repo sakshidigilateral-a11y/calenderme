@@ -71,7 +71,7 @@ export default function AddDoctor() {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
 
-      const response = await axios.post("http://localhost:5000/api/createdoc", {
+      const response = await axios.post("https://calendarme.digilateral.com/api/createdoc", {
         ...formData,
         mrId: user.mrId,
         status: "pending",
@@ -80,7 +80,7 @@ export default function AddDoctor() {
       showPopup(
         "success",
         "Doctor Added Successfully!",
-        `Dr. ${formData.doctorName} has been submitted for approval.`
+        ` ${formData.doctorName} has been submitted for approval.`
       );
 
       setFormData({
@@ -115,7 +115,7 @@ export default function AddDoctor() {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
 
-      await axios.post("http://localhost:5000/api/createdoc", {
+      await axios.post("https://calendarme.digilateral.com/api/createdoc", {
         ...formData,
         mrId: user.mrId,
         status: "draft",
@@ -502,6 +502,50 @@ export default function AddDoctor() {
             grid-template-columns: 1fr;
           }
         }
+
+        /* Mobile responsiveness for AddDoctor */
+@media (max-width: 768px) {
+  /* Stack formLayout */
+  .formLayout {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  /* Stack the 3‑column business grid */
+  .formGrid.threeCol {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+
+  /* Make radio buttons vertical */
+  .radio {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  /* Wrap footer actions */
+  .footerActions {
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  .footerActions .btn {
+    flex: 1 1 100%;  /* full width buttons */
+  }
+
+  /* Adjust InfoCards – already stacked by the grid, but ensure padding */
+  .rightInfo {
+    display: grid;
+    gap: 12px;
+  }
+
+  /* Tweak popup width on very small screens */
+  .popup-container {
+    max-width: 95% !important;
+    padding: 24px !important;
+  }
+}
       `}</style>
     </Layout>
   );

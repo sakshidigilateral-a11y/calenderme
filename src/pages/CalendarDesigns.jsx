@@ -13,73 +13,13 @@ import {
 import Layout from "../components/Layout";
 import { Button, Crumbs, Badge } from "../components/UIComponents";
 import { months } from "../utils/helpers";
-
-// Import your actual design assets from CalendarSelect - ALL DESIGNS PER MONTH
-const designAssets = {
-  January: [
-    { id: "jan-v1", label: "Jan V1", file: new URL("../assets/Jan v1.webp", import.meta.url).href },
-    { id: "jan-v2", label: "Jan V2", file: new URL("../assets/Jan v2.webp", import.meta.url).href },
-    { id: "jan-v3", label: "Jan V3", file: new URL("../assets/Jan v3.webp", import.meta.url).href },
-    { id: "jan",    label: "Jan",    file: new URL("../assets/jan.webp",    import.meta.url).href },
-  ],
-  February: [
-    { id: "feb-v1", label: "Feb V1", file: new URL("../assets/Feb v1.webp", import.meta.url).href },
-    { id: "feb",    label: "Feb",    file: new URL("../assets/feb.webp",    import.meta.url).href },
-  ],
-  March: [
-    { id: "march-v1", label: "March V1", file: new URL("../assets/March v1.webp", import.meta.url).href },
-    { id: "march-v2", label: "March V2", file: new URL("../assets/March v2.webp", import.meta.url).href },
-    { id: "march",    label: "March",    file: new URL("../assets/march.webp",    import.meta.url).href },
-  ],
-  April: [
-    { id: "april", label: "April", file: new URL("../assets/april.webp", import.meta.url).href },
-  ],
-  May: [
-    { id: "may-v1", label: "May V1", file: new URL("../assets/May v1.webp", import.meta.url).href },
-    { id: "may",    label: "May",    file: new URL("../assets/may.webp",    import.meta.url).href },
-  ],
-  June: [
-    { id: "june-v1", label: "June V1", file: new URL("../assets/June v1.webp", import.meta.url).href },
-    { id: "june",    label: "June",    file: new URL("../assets/june.webp",    import.meta.url).href },
-  ],
-  July: [
-    { id: "july-v1", label: "July V1", file: new URL("../assets/July v1.webp", import.meta.url).href },
-    { id: "july-v2", label: "July V2", file: new URL("../assets/July v2.webp", import.meta.url).href },
-    { id: "july-v3", label: "July V3", file: new URL("../assets/July v3.webp", import.meta.url).href },
-    { id: "july-v4", label: "July V4", file: new URL("../assets/July v4.webp", import.meta.url).href },
-    { id: "july-v5", label: "July V5", file: new URL("../assets/July v5.webp", import.meta.url).href },
-    { id: "july",    label: "July",    file: new URL("../assets/july.webp",    import.meta.url).href },
-  ],
-  August: [
-    { id: "aug-v1", label: "Aug V1", file: new URL("../assets/Aug v1.webp", import.meta.url).href },
-    { id: "aug-v2", label: "Aug V2", file: new URL("../assets/Aug v2.webp", import.meta.url).href },
-    { id: "aug-v3", label: "Aug V3", file: new URL("../assets/Aug v3.webp", import.meta.url).href },
-    { id: "august", label: "August", file: new URL("../assets/august.webp", import.meta.url).href },
-  ],
-  September: [
-    { id: "sep-v1",    label: "Sep V1",    file: new URL("../assets/Sep v1.webp", import.meta.url).href },
-    { id: "sep-v2",    label: "Sep V2",    file: new URL("../assets/Sep v2.webp", import.meta.url).href },
-    { id: "september", label: "September", file: new URL("../assets/september.webp", import.meta.url).href },
-  ],
-  October: [
-    { id: "oct-v1", label: "Oct V1", file: new URL("../assets/Oct v1.webp", import.meta.url).href },
-    { id: "oct",    label: "Oct",    file: new URL("../assets/oct.webp",    import.meta.url).href },
-  ],
-  November: [
-    { id: "nov-v1", label: "Nov V1", file: new URL("../assets/Nov v1.webp", import.meta.url).href },
-    { id: "nov",    label: "Nov",    file: new URL("../assets/nov.webp",    import.meta.url).href },
-  ],
-  December: [
-    { id: "dec-v1", label: "Dec V1", file: new URL("../assets/Dec v1.webp", import.meta.url).href },
-    { id: "dec",    label: "Dec",    file: new URL("../assets/dec.webp",    import.meta.url).href },
-  ],
-};
+import { designAssets } from "../utils/designAssets";   // ✅ imported from shared file
 
 const CALENDAR_YEAR = 2027;
 
+// ─── Preview Modal (same as before) ───────────────────
 function PreviewModal({ design, month, onClose }) {
   if (!design) return null;
-  
   return (
     <div
       style={{
@@ -116,7 +56,6 @@ function PreviewModal({ design, month, onClose }) {
             <div style={{ fontWeight: 700, fontSize: 16 }}>
               {design.label} — {month} {CALENDAR_YEAR}
             </div>
-            {/* <div style={{ fontSize: 12, color: "#6b7280" }}>Code: {design.id}</div> */}
           </div>
           <button
             onClick={onClose}
@@ -194,6 +133,7 @@ function PreviewModal({ design, month, onClose }) {
   );
 }
 
+// ─── Design Card ──────────────────────────────────────
 function DesignCard({ design, onPreview, onDownload }) {
   return (
     <div
@@ -250,7 +190,6 @@ function DesignCard({ design, onPreview, onDownload }) {
       <div style={{ padding: "10px 12px 12px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
         <div>
           <div style={{ fontSize: 13, fontWeight: 700, color: "#1a1a2e" }}>{design.label}</div>
-          {/* <div style={{ fontSize: 11, color: "#6b7280", marginTop: 1 }}>Code: {design.id}</div> */}
         </div>
         <div style={{ display: "flex", gap: 6 }}>
           <button
@@ -268,7 +207,7 @@ function DesignCard({ design, onPreview, onDownload }) {
           >
             <Eye size={12} />
           </button>
-          <button
+          {/* <button
             onClick={(e) => { e.stopPropagation(); onDownload(design); }}
             style={{
               padding: "5px 8px",
@@ -282,14 +221,26 @@ function DesignCard({ design, onPreview, onDownload }) {
             }}
           >
             <Download size={12} />
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
   );
 }
 
-export default function CalendarDesigns({ role = "manager" }) {
+// ─── Main Component ────────────────────────────────────
+export default function CalendarDesigns({ role: propRole }) {
+  // Get role from props or localStorage
+  const getUserRole = () => {
+    if (propRole) return propRole;
+    try {
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      return user.role || "mr";
+    } catch {
+      return "mr";
+    }
+  };
+  const role = getUserRole();
   const navigate = useNavigate();
   const [currentYear, setCurrentYear] = useState(CALENDAR_YEAR);
   const [viewMode, setViewMode] = useState("grid");
@@ -297,40 +248,37 @@ export default function CalendarDesigns({ role = "manager" }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("all");
 
-  // Get all designs across all months (ALL DESIGNS, not just one per month)
+  // Build a flat list of all designs with month info
   const getAllDesigns = () => {
-    const allDesigns = [];
+    const all = [];
     months.forEach(month => {
       const designs = designAssets[month] || [];
       designs.forEach(design => {
-        allDesigns.push({
+        all.push({
           ...design,
           month: month,
           status: "available"
         });
       });
     });
-    return allDesigns;
+    return all;
   };
 
   const allDesigns = getAllDesigns();
 
-  // Filter designs
   const getFilteredDesigns = () => {
     let filtered = [...allDesigns];
-    
     if (searchTerm) {
-      filtered = filtered.filter(design =>
-        design.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        design.month.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        design.id.toLowerCase().includes(searchTerm.toLowerCase())
+      const term = searchTerm.toLowerCase();
+      filtered = filtered.filter(d =>
+        d.label.toLowerCase().includes(term) ||
+        d.month.toLowerCase().includes(term) ||
+        d.id.toLowerCase().includes(term)
       );
     }
-    
     if (selectedMonth !== "all") {
-      filtered = filtered.filter(design => design.month === selectedMonth);
+      filtered = filtered.filter(d => d.month === selectedMonth);
     }
-    
     return filtered;
   };
 
@@ -344,25 +292,17 @@ export default function CalendarDesigns({ role = "manager" }) {
     link.click();
   };
 
-  const handlePrint = () => {
-    window.print();
-  };
-
-  const handleYearChange = (delta) => {
-    setCurrentYear(prev => prev + delta);
-  };
-
+  const handlePrint = () => window.print();
+  const handleYearChange = (delta) => setCurrentYear(prev => prev + delta);
   const handleClearFilters = () => {
     setSearchTerm("");
     setSelectedMonth("all");
   };
 
-  // Group designs by month for better organization
+  // Group designs by month
   const designsByMonth = {};
   filteredDesigns.forEach(design => {
-    if (!designsByMonth[design.month]) {
-      designsByMonth[design.month] = [];
-    }
+    if (!designsByMonth[design.month]) designsByMonth[design.month] = [];
     designsByMonth[design.month].push(design);
   });
 
@@ -406,30 +346,24 @@ export default function CalendarDesigns({ role = "manager" }) {
               <List size={16} />
             </button>
           </div>
-          <Button variant="outline" icon={Printer} onClick={handlePrint}>
+          {/* <Button variant="outline" icon={Printer} onClick={handlePrint}>
             Print
-          </Button>
+          </Button> */}
         </div>
       </div>
 
       {/* Year Selector */}
       <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'center', gap: '16px', alignItems: 'center' }}>
-        <button
-          onClick={() => handleYearChange(-1)}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}
-        >
+        <button onClick={() => handleYearChange(-1)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}>
           <ChevronLeft size={20} />
         </button>
         <span style={{ fontSize: '24px', fontWeight: 'bold', minWidth: '80px', textAlign: 'center' }}>{currentYear}</span>
-        <button
-          onClick={() => handleYearChange(1)}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}
-        >
+        <button onClick={() => handleYearChange(1)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}>
           <ChevronRight size={20} />
         </button>
       </div>
 
-      {/* Search and Filters */}
+      {/* Search & Filters */}
       <div style={{ marginBottom: '20px' }}>
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
           <input
@@ -446,7 +380,6 @@ export default function CalendarDesigns({ role = "manager" }) {
               minWidth: '200px'
             }}
           />
-          
           <select
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
@@ -457,7 +390,6 @@ export default function CalendarDesigns({ role = "manager" }) {
               <option key={month} value={month}>{month}</option>
             ))}
           </select>
-          
           <button
             onClick={handleClearFilters}
             style={{ padding: '8px 16px', border: '1px solid #ddd', borderRadius: '6px', background: 'white', cursor: 'pointer' }}
@@ -490,39 +422,38 @@ export default function CalendarDesigns({ role = "manager" }) {
         </div>
       </div>
 
-      {/* Designs Display - Grouped by Month */}
-      {filteredDesigns.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '60px', background: '#f9fafb', borderRadius: '12px' }}>
-          <p>No designs found matching your criteria.</p>
-        </div>
-      ) : viewMode === "grid" ? (
-        // Group by month for better organization
-        Object.keys(designsByMonth).sort().map(month => (
-          <div key={month} style={{ marginBottom: '32px' }}>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              marginBottom: '16px',
-              paddingBottom: '8px',
-              borderBottom: '2px solid #e5e7eb'
-            }}>
-              <h2 style={{ margin: 0, fontSize: '20px', color: '#374151' }}>{month}</h2>
-              <Badge tone="blue">{designsByMonth[month].length} designs</Badge>
-            </div>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-              gap: '20px'
-            }}>
-              {designsByMonth[month].map((design) => (
-                <DesignCard
-                  key={`${design.month}-${design.id}`}
-                  design={design}
-                  onPreview={setPreviewDesign}
-                  onDownload={handleDownload}
-                />
-              ))}
+      {/* Designs Display */}
+    {filteredDesigns.length === 0 ? (
+  <div style={{ textAlign: 'center', padding: '60px', background: '#f9fafb', borderRadius: '12px' }}>
+    <p>No designs found matching your criteria.</p>
+  </div>
+) : viewMode === "grid" ? (
+  months.filter(month => designsByMonth[month]).map(month => (
+    <div key={month} style={{ marginBottom: '32px' }}>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '12px',
+        marginBottom: '16px',
+        paddingBottom: '8px',
+        borderBottom: '2px solid #e5e7eb'
+      }}>
+        <h2 style={{ margin: 0, fontSize: '20px', color: '#374151' }}>{month}</h2>
+        <Badge tone="blue">{designsByMonth[month].length} designs</Badge>
+      </div>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+        gap: '20px'
+      }}>
+        {designsByMonth[month].map((design) => (
+          <DesignCard
+            key={`${design.month}-${design.id}`}
+            design={design}
+            onPreview={setPreviewDesign}
+            onDownload={handleDownload}
+          />
+        ))}
             </div>
           </div>
         ))
